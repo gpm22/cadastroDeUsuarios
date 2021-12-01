@@ -1,0 +1,2 @@
+INSERT INTO users (cpf, name, password, userName, role) VALUES ('0', 'administrador', '123456', 'admin', 'administrator');
+INSERT INTO users (cpf, name, password, userName, role) VALUES ('1', 'comum', '123456', 'comum', 'ordinary');
