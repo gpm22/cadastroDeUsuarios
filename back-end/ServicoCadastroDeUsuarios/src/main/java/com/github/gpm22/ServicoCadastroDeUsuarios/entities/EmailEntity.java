@@ -9,6 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.ToString;
+
+@Data
 @Entity
 @Table(name="EMAILS")
 public class EmailEntity{
@@ -19,8 +25,17 @@ public class EmailEntity{
 	private Long id;
 	@Column(name="adress_email")
 	private String email;
+	@JsonIgnore
+	@ToString.Exclude
 	@ManyToOne
-	@JoinColumn(name="user_cpf", nullable=false)
+	@JoinColumn(name="user_cpf")
 	private UserEntity user;
+	
+	public EmailEntity(String email) {
+		super();
+		this.email = email;
+	}
+	
+	public EmailEntity() {}
 	
 }

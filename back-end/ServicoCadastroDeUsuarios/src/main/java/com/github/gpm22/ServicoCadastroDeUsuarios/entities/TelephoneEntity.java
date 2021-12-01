@@ -10,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.ToString;
+
+@Data
 @Entity
 @Table(name="TELEPHONES")
 public class TelephoneEntity{
@@ -22,7 +28,17 @@ public class TelephoneEntity{
 	private String type;
 	@Column(name="telephone_number")
 	private String number;
+	@JsonIgnore
+	@ToString.Exclude
 	@ManyToMany
 	private Set<UserEntity> users;
+	
+	public TelephoneEntity(String type, String number) {
+		super();
+		this.type = type;
+		this.number = number;
+	}
+	
+	public TelephoneEntity() {}
 	
 }

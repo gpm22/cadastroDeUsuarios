@@ -4,12 +4,20 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+@Data
 @Entity
 @Table(name="ADRESSES")
 public class AdressEntity{
@@ -28,8 +36,21 @@ public class AdressEntity{
 	private String city;
 	@Column(name="adress_uf")
 	private String uf;
-	@OneToMany(mappedBy="adress")
+	@JsonIgnore
+	@ToString.Exclude
+	@OneToMany( mappedBy="adress")
 	private Set<UserEntity> users;
+	
+	public AdressEntity(String cep, String publicPlace, String district, String city, String uf) {
+		super();
+		this.cep = cep;
+		this.publicPlace = publicPlace;
+		this.district = district;
+		this.city = city;
+		this.uf = uf;
+	}
+	
+	public AdressEntity() {}
 	
 	
 }
