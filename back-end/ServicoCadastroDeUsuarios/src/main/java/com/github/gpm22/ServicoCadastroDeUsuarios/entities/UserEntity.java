@@ -1,5 +1,6 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -52,10 +53,13 @@ public class UserEntity{
 		this.userName = userName;
 		this.password = password;
 		this.role = role;
+		this.emails = new HashSet<>();
+		this.telephones = new HashSet<>();
 	}
 	
 	public UserEntity() {
-		
+		this.emails = new HashSet<>();
+		this.telephones = new HashSet<>();
 	}
 	
 	

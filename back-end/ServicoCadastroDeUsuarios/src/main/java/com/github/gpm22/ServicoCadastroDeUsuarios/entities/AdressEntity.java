@@ -1,5 +1,6 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,9 +50,12 @@ public class AdressEntity{
 		this.district = district;
 		this.city = city;
 		this.uf = uf;
+		this.users = new HashSet<>();
 	}
 	
-	public AdressEntity() {}
+	public AdressEntity() {
+		this.users = new HashSet<>();
+	}
 	
 	
 }

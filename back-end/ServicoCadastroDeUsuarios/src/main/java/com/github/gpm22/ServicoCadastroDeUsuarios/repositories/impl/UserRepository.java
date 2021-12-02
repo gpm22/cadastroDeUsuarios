@@ -28,7 +28,7 @@ public class UserRepository implements IUserRepository{
 
 	@Override
 	public Optional<UserEntity> findById(Object id) {
-		return Optional.of(entityManager.find(UserEntity.class, (String) id));
+		return Optional.ofNullable(entityManager.find(UserEntity.class, (String) id));
 	}
 
 	@Override
@@ -39,7 +39,29 @@ public class UserRepository implements IUserRepository{
 
 	@Override
 	public Optional<UserEntity> findByUserName(String userName) {
-		return Optional.of((UserEntity) entityManager.createQuery("Select t from UserEntity t where t.userName = :userName").setParameter("userName", userName).getSingleResult());
+		return Optional.ofNullable((UserEntity) entityManager.createQuery("Select t from UserEntity t where t.userName = :userName").setParameter("userName", userName).getSingleResult());
+	}
+
+	@Override
+	@Transactional
+	public UserEntity remove(UserEntity object) {
+
+		if (entityManager.contains(object)) {
+	        entityManager.remove(object);
+	    } else {
+	    	UserEntity ee = entityManager.getReference(object.getClass(), object.getCpf());
+	        entityManager.remove(ee);
+	    }
+		entityManager.flush();
+		return object;
+	}
+
+	@Override
+	@Transactional
+	public UserEntity update(UserEntity object) {
+		entityManager.merge(object);
+		entityManager.flush();
+		return object;
 	}
 
 }

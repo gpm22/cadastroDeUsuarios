@@ -1,5 +1,6 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -40,8 +41,11 @@ public class TelephoneEntity{
 		super();
 		this.type = type;
 		this.number = number;
+		this.users = new HashSet<>();
 	}
 	
-	public TelephoneEntity() {}
+	public TelephoneEntity() {
+		this.users = new HashSet<>();
+	}
 	
 }

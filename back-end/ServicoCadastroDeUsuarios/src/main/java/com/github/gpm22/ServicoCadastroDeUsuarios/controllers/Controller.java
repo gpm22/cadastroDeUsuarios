@@ -4,8 +4,12 @@ import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,26 +24,71 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("cadastro-de-usuarios")
 @Log4j2
 public class Controller {
-	
+
 	@Autowired
 	IUserService userService;
-	
-	@GetMapping(value="/{cpf}", produces = "application/json")
-	public Optional<UserEntity> getUser(@PathVariable String cpf){
-		userRepositoryTest();
-		return userService.getById(cpf);
+
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value = "/{cpf}", produces = "application/json")
+	public ResponseEntity getUser(@PathVariable String cpf) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf).get());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value = "/{userName}/{password}", produces = "application/json")
+	public ResponseEntity authenticateUser(@PathVariable String userName, @PathVariable String password) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(userService.authenticateUser(userName, password));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@PostMapping(value = "/create-user", consumes = "application/json")
+	public ResponseEntity createUser(@RequestBody String response) {
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(userService.insert(userService.parserInsert(new JSONObject(response))));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@PutMapping(value = "/update-user/{cpf}", consumes = "application/json")
+	public ResponseEntity updateUser(@RequestBody String response, @PathVariable String cpf) {
+
+		try {
+			
+			UserEntity userUpdate = userService.parserUpdate(new JSONObject(response), cpf);
+			
+			if(userUpdate == null) {
+				return ResponseEntity.status(HttpStatus.OK)
+						.body(userService.getById(cpf));
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(userService.update(userUpdate));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 	
-	@GetMapping(value="/{userName}/{password}", produces = "application/json")
-	public boolean getUser(@PathVariable String userName, @PathVariable String password){
-		return userService.authenticateUser(userName, password);
+	@SuppressWarnings("rawtypes")
+	@DeleteMapping(value = "/delete-user/{cpf}")
+	public ResponseEntity deleteUser(@PathVariable String cpf) {
+
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(userService.remove(userService.getById(cpf).get()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
-	
-	@PutMapping(value = "/user", consumes = "application/json")
-	public UserEntity createUser(@RequestBody String response) {
-		JSONObject jsonObject = new JSONObject(response);
-		return null;
-	}
-	
 
 }
