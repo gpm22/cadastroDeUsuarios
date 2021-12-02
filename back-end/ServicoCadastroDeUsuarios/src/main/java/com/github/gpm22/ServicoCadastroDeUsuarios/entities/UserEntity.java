@@ -26,7 +26,7 @@ public class UserEntity{
 	private String cpf;
 	@Column(name="user_name")
 	private String name;
-	@Column(name="user_username")
+	@Column(name="user_username", unique=true)
 	private String userName;
 	@Column(name="user_password")
 	private String password;

@@ -2,9 +2,9 @@ package com.github.gpm22.ServicoCadastroDeUsuarios.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
@@ -38,7 +38,8 @@ public class AdressEntity{
 	private String uf;
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany( mappedBy="adress")
+	@EqualsAndHashCode.Exclude
+	@OneToMany( mappedBy="adress", cascade = CascadeType.PERSIST)
 	private Set<UserEntity> users;
 	
 	public AdressEntity(String cep, String publicPlace, String district, String city, String uf) {

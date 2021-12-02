@@ -1,17 +1,13 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 
-public interface IUserService{
+public interface IUserService extends IGenericService<UserEntity>{
 
 	public List<UserEntity> getAll();
 
-	public UserEntity insert(UserEntity user);
-	
-	public Optional<UserEntity> getByCpf(String cpf);
-	
+	public boolean authenticateUser(String userName, String password);
 	
 }

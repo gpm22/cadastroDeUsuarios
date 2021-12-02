@@ -6,23 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
-import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.TelephoneRepository;
+import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.ITelephoneRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.ITelephoneService;
 
 @Service
 public class TelephoneService implements ITelephoneService{
 	
 	@Autowired
-	TelephoneRepository telephoneRepository;
+	ITelephoneRepository telephoneRepository;
 
 	@Override
 	public TelephoneEntity insert(TelephoneEntity telephone) {
-		return telephoneRepository.saveAndFlush(telephone);
+		return telephoneRepository.insert(telephone);
 	}
 
 	@Override
-	public Optional<TelephoneEntity> getById(Long id) {
-		return telephoneRepository.findById(id);
+	public Optional<TelephoneEntity> getById(Object id) {
+		return telephoneRepository.findById( (Long) id);
 	}
 
 }
