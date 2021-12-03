@@ -39,7 +39,7 @@ public class Controller {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@GetMapping(value = "/authenticate", produces = "application/json")
+	@PostMapping(value = "/authenticate", produces = "application/json")
 	public ResponseEntity authenticateUser(@RequestBody String response) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(userService.authenticateUser(response));

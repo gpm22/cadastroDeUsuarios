@@ -26,7 +26,7 @@ public class EmailEntity{
 	@EqualsAndHashCode.Exclude
 	@Column(name="email_id")
 	private Long id;
-	@Column(name="adress_email")
+	@Column(name="adress_email", unique=true)
 	private String email;
 	@JsonIgnore
 	@ToString.Exclude

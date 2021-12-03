@@ -51,7 +51,6 @@ public class TelephoneService implements ITelephoneService {
 
 	@Override
 	public TelephoneEntity parser(JSONObject json) {
-		log.info("telephone-parser - json " + json);
 		TelephoneEntity telephone = new TelephoneEntity();
 		telephone.setType(json.getString("type"));
 		telephone.setNumber(json.getString("number"));
