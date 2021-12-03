@@ -25,6 +25,7 @@ public class AdressEntity{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@EqualsAndHashCode.Exclude
 	@Column(name="adress_id")
 	private Long id;
 	@Column(name="adress_cep")

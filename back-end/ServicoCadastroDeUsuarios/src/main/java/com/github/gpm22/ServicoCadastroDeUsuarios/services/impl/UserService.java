@@ -46,6 +46,30 @@ public class UserService implements IUserService {
 	@Override
 	public UserEntity insert(UserEntity user) throws DataIntegrityViolationException {
 		try {
+
+			List<AdressEntity> adresses = adressService.getAll();
+			int adressPosition = adresses.indexOf(user.getAdress());
+			if (adressPosition > -1) {
+				user.setAdress(adresses.get(adressPosition));
+			}
+
+			List<TelephoneEntity> telephonesAll = telephoneService.getAll();
+			Set<TelephoneEntity> telephonesUser = new HashSet<>(user.getTelephones());
+			
+			int telCount = 1;
+			
+			for(TelephoneEntity telephone: telephonesAll) {
+				if(telephonesUser.contains(telephone)) {
+					user.getTelephones().remove(telephone);
+					user.getTelephones().add(telephone);
+					telCount++;
+				}
+				if(telCount == telephonesUser.size()) {
+					break;
+				}
+			}
+			
+
 			return userRepository.insert(user);
 		} catch (DataIntegrityViolationException e) {
 			if (e.getMessage().contains("PUBLIC.USERS(USER_CPF)")) {
@@ -63,19 +87,33 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public boolean authenticateUser(String userName, String password) {
-		Optional<UserEntity> user = userRepository.findByUserName(userName);
-		return user.get().getPassword().equals(password);
-	}
-
-	@Override
 	public UserEntity remove(UserEntity object) {
-		return userRepository.remove(object);
+		userRepository.remove(object);
+		adressService.clean(object);
+		telephoneService.clean(object);		
+		return object;
 	}
 
 	@Override
 	public UserEntity update(UserEntity user) throws DataIntegrityViolationException {
 		try {
+
+			UserEntity userOriginal = userRepository.findById(user.getCpf()).get();
+
+			if (user.equals(userOriginal)) {
+				return user;
+			}
+
+			if (user.getEmails().size() < userOriginal.getEmails().size()) {
+
+				Set<EmailEntity> emailsExcluded = new HashSet<>(userOriginal.getEmails());
+
+				emailsExcluded.removeAll(user.getEmails());
+
+				emailsExcluded.forEach((email) -> emailService.remove(email));
+
+			}
+
 			return userRepository.update(user);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityViolationException(
@@ -91,39 +129,6 @@ public class UserService implements IUserService {
 		user.setUserName(json.getString("userName"));
 		user.setPassword(json.getString("password"));
 		user.setRole(json.getString("role"));
-
-		return user;
-	}
-
-	@Override
-	public UserEntity parserUpdate(JSONObject json, String cpf) {
-		UserEntity user = parserInsert(json);
-		UserEntity userOriginal = userRepository.findById(cpf).get();
-
-		if (user.equals(userOriginal)) {
-			return null;
-		}
-
-		if (user.getTelephones().size() < userOriginal.getTelephones().size()) {
-
-		}
-
-		if (user.getEmails().size() < userOriginal.getEmails().size()) {
-			
-			Set<EmailEntity> emailsExcluded = new HashSet<>(userOriginal.getEmails());
-			emailsExcluded.removeAll(user.getEmails());
-			
-			emailsExcluded.forEach((email) -> emailService.remove(email));		
-
-		}
-
-		return user;
-	}
-
-	@Override
-	public UserEntity parserInsert(JSONObject json) {
-
-		UserEntity user = parser(json);
 
 		AdressEntity adress = adressService.parser(json.getJSONObject("adress"));
 		user.setAdress(adress);
@@ -143,6 +148,18 @@ public class UserService implements IUserService {
 		});
 
 		return user;
+	}
+
+	@Override
+	public boolean authenticateUser(String response) {
+		JSONObject json = new JSONObject(response);
+		return authenticateUser(json.getString("userName"), json.getString("password"));
+	}
+	
+	@Override
+	public boolean authenticateUser(String userName, String password) {
+		Optional<UserEntity> user = userRepository.findByUserName(userName);
+		return user.get().getPassword().equals(password);
 	}
 
 }

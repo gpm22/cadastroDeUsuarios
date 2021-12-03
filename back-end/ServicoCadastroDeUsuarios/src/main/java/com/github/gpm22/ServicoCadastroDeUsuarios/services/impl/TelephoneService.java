@@ -1,13 +1,17 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
+import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.ITelephoneRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.ITelephoneService;
 
@@ -58,6 +62,26 @@ public class TelephoneService implements ITelephoneService {
 			
 		}
 		return telephone;
+	}
+
+	@Override
+	public int clean(UserEntity object) {
+		List<TelephoneEntity> telephonesAll = new ArrayList<>(getAll());
+		Set<TelephoneEntity> telephonesUser = new HashSet<>(object.getTelephones());
+		
+		int telCount = 1;
+		
+		for(TelephoneEntity telephone: telephonesAll) {
+			if(telephonesUser.contains(telephone) && telephone.getUsers().size() == 0) {
+				remove(telephone);
+				telCount++;
+			}
+			if(telCount == telephonesUser.size()) {
+				break;
+			}
+		}
+		
+		return telCount;
 	}
 
 }

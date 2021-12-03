@@ -9,14 +9,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
 
 @Repository
-public class UserRepository implements IUserRepository{
-	
+public class UserRepository implements IUserRepository {
+
 	@PersistenceContext
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	@Override
 	@Transactional
@@ -35,11 +36,14 @@ public class UserRepository implements IUserRepository{
 	@SuppressWarnings("unchecked")
 	public List<UserEntity> findAll() {
 		return entityManager.createQuery("Select t from UserEntity t").getResultList();
+
 	}
 
 	@Override
 	public Optional<UserEntity> findByUserName(String userName) {
-		return Optional.ofNullable((UserEntity) entityManager.createQuery("Select t from UserEntity t where t.userName = :userName").setParameter("userName", userName).getSingleResult());
+		return Optional.ofNullable(
+				(UserEntity) entityManager.createQuery("Select t from UserEntity t where t.userName = :userName")
+						.setParameter("userName", userName).getSingleResult());
 	}
 
 	@Override
@@ -47,11 +51,11 @@ public class UserRepository implements IUserRepository{
 	public UserEntity remove(UserEntity object) {
 
 		if (entityManager.contains(object)) {
-	        entityManager.remove(object);
-	    } else {
-	    	UserEntity ee = entityManager.getReference(object.getClass(), object.getCpf());
-	        entityManager.remove(ee);
-	    }
+			entityManager.remove(object);
+		} else {
+			UserEntity ee = entityManager.getReference(object.getClass(), object.getCpf());
+			entityManager.remove(ee);
+		}
 		entityManager.flush();
 		return object;
 	}
@@ -62,6 +66,15 @@ public class UserRepository implements IUserRepository{
 		entityManager.merge(object);
 		entityManager.flush();
 		return object;
+	}
+
+	@Override
+	@Transactional
+	public int removeFromUsersTelephones(TelephoneEntity telephone, UserEntity user) {
+		return entityManager
+				.createQuery("DELETE FROM users_telephones WHERE user_cpf = :userCpf AND telephone_id = :telephoneId")
+				.setParameter("userCpf", user.getClass()).setParameter("telephoneID", telephone.getId())
+				.executeUpdate();
 	}
 
 }

@@ -25,6 +25,7 @@ public class TelephoneEntity{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@EqualsAndHashCode.Exclude
 	@Column(name="telephone_id")
 	private Long id;
 	@Column(name="telephone_type")

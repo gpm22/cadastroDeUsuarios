@@ -35,13 +35,13 @@ public class UserEntity{
 	private String role;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private Set<EmailEntity> emails;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(
 			name = "users_telephones",
 			joinColumns = @JoinColumn(name = "user_cpf"),
 			inverseJoinColumns = @JoinColumn(name = "telephone_id"))
 	private Set<TelephoneEntity> telephones;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="adress_id")
 	private AdressEntity adress;
 	

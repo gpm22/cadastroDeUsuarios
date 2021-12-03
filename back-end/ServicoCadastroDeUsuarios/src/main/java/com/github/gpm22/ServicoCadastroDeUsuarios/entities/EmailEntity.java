@@ -23,6 +23,7 @@ public class EmailEntity{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@EqualsAndHashCode.Exclude
 	@Column(name="email_id")
 	private Long id;
 	@Column(name="adress_email")
@@ -30,7 +31,7 @@ public class EmailEntity{
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_cpf")
 	private UserEntity user;
 	

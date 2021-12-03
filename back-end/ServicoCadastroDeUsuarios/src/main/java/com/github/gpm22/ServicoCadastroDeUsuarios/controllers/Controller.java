@@ -39,10 +39,10 @@ public class Controller {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@GetMapping(value = "/{userName}/{password}", produces = "application/json")
-	public ResponseEntity authenticateUser(@PathVariable String userName, @PathVariable String password) {
+	@GetMapping(value = "/authenticate", produces = "application/json")
+	public ResponseEntity authenticateUser(@RequestBody String response) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.authenticateUser(userName, password));
+			return ResponseEntity.status(HttpStatus.OK).body(userService.authenticateUser(response));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
@@ -53,7 +53,7 @@ public class Controller {
 	public ResponseEntity createUser(@RequestBody String response) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(userService.insert(userService.parserInsert(new JSONObject(response))));
+					.body(userService.insert(userService.parser(new JSONObject(response))));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
@@ -65,7 +65,7 @@ public class Controller {
 
 		try {
 			
-			UserEntity userUpdate = userService.parserUpdate(new JSONObject(response), cpf);
+			UserEntity userUpdate = userService.parser(new JSONObject(response));
 			
 			if(userUpdate == null) {
 				return ResponseEntity.status(HttpStatus.OK)

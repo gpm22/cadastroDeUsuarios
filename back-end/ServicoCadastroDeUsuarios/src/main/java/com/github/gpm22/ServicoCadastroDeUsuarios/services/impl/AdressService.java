@@ -1,5 +1,6 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
+import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IAdressRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IAdressService;
 
@@ -62,5 +64,16 @@ public class AdressService implements IAdressService {
 		}
 
 		return adress;
+	}
+
+	@Override
+	public boolean clean(UserEntity object) {
+		
+		if(object.getAdress().getUsers().size() == 0) {
+			remove(object.getAdress());
+			return true;
+		}
+
+		return false;
 	}
 }
