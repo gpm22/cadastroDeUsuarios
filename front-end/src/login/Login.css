@@ -1,0 +1,27 @@
+.login-block {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  padding: 15px;
+  border-radius: 10%;
+  border-color: #ddd;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.buttons input {
+    width: 100%;
+}
+
+input + input {
+    margin-top: 10px;
+}
