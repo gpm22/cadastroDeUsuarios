@@ -1,0 +1,13 @@
+.account-data-block input, .account-data-block p {
+    display: inline-block;
+}
+
+.account-data-block h3 + p, br + p{
+    text-indent: 30px;
+}
+.account-data-block input {
+    margin-left: 15px;
+}
+.account-data-block .input-account-data{
+    margin-left: 37px;
+}

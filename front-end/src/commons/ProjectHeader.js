@@ -4,7 +4,8 @@ import user from "../user.svg";
 
 const Header = () => (
     <header>
-       <span><img src={user}></img>  <h1>Banco de Usuários</h1></span>
+       <span><img src={user} alt="user"></img>  <h1>Banco de Usuários</h1></span>
+       <button>Sair</button>
     </header>
 );
 

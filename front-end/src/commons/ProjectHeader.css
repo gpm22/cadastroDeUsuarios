@@ -1,9 +1,30 @@
 header {
+  position: fixed;
+  top: 0;
   display: flex;
+  justify-content: space-between;
   width: 100%;
   padding: 0 5%;
+  box-sizing: border-box;
   border-bottom: 2px solid lime;
+  background-color: #222;
 }
+
+header button {
+margin: auto 0;
+  color: #ddd;
+  background-color: inherit;
+  border-radius: 50%;
+  transition: 0.3s;
+  font-weight: bold;
+  font-size: x-large;
+  cursor: pointer;
+  border-style: none;
+}
+
+header button:hover {
+  color: lime;
+} 
 
 header span {
   display: flex;
@@ -19,9 +40,10 @@ header h1 {
   margin: auto 0;
 }
 
-@media (max-height: 600px) {
+@media (max-width: 600px) {
   header {
       margin: 0;
       padding: auto;
+      flex-direction: column;
   }
 }

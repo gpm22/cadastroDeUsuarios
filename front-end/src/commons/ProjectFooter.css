@@ -1,11 +1,13 @@
 footer{
     width: 90%;
-    position: fixed;
-    bottom: 0;
+    height: 100px;
     text-align: right;
-    padding: 2% 5%;
+    padding: 0 5%;
     border-top: 2px solid lime;
-    display: block;
+}
+
+footer p {
+    margin: 37px 0;
 }
 
 footer a {

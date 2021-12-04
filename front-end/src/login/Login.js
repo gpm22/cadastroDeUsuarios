@@ -40,6 +40,7 @@ function Login(props) {
 
   return (
     <div id="login-wrapper">
+    <div id="invisible-header"></div>
     <ProjectHeader/>
       <div className="login-block">
         <h1>Acesso ao Sistema</h1>

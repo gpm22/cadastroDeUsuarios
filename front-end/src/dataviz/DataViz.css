@@ -1,0 +1,7 @@
+.dataviz-block {
+    margin: 150px 0 50px 50px;
+}
+
+.dataviz-block p + p, .dataviz-block h2 + p, .dataviz-block h3 + p  {
+    text-indent: 30px;
+}
