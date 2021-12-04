@@ -1,6 +1,5 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +55,7 @@ public class AdressService implements IAdressService {
 		adress.setDistrict(json.getString("district"));
 		adress.setCity(json.getString("city"));
 		adress.setUf(json.getString("uf"));
+		adress.setComplement(json.getString("complement"));
 		
 		try {
 			adress.setId(json.getLong("id"));

@@ -30,7 +30,7 @@ public class EntitiesTest {
 	@Test
 	public void testarParser() {
 		log.info("iniciando testarParser");
-		String jsonString = "{\"cpf\":\"0\",\"name\":\"administrador\",\"userName\":\"admin\",\"password\":\"123456\",\"role\":\"administrator\",\"emails\":[{\"id\":0,\"email\":\"askaoskoaks@aoskoaksa.com\"}],\"telephones\":[{\"id\":0,\"type\":\"fixo\",\"number\":\"32818210\"}],\"adress\":{\"id\":0,\"cep\":\"0000000\",\"publicPlace\":\"Rua 19 lote 08 casa 01\",\"district\":\"Nova Iguaçu\",\"city\":\"Rio Verde\",\"uf\":\"OM\"}}";
+		String jsonString = "{\"cpf\":\"0\",\"name\":\"administrador\",\"username\":\"admin\",\"password\":\"123456\",\"role\":\"administrator\",\"emails\":[{\"id\":0,\"email\":\"askaoskoaks@aoskoaksa.com\"}],\"telephones\":[{\"id\":0,\"type\":\"fixo\",\"number\":\"32818210\"}],\"adress\":{\"id\":0,\"cep\":\"0000000\",\"publicPlace\":\"Rua 19 lote 08 casa 01\",\"district\":\"Nova Iguaçu\",\"city\":\"Rio Verde\",\"uf\":\"OM\", \"complement\":\"ao lado do posto de saúde\"}}";
 		
 		log.info("json parseado: " + userService.parser(new JSONObject(jsonString)));
 		log.info("finalizando testarParser");
@@ -46,7 +46,7 @@ public class EntitiesTest {
 		users.forEach((u) -> log.info("usuário: " + u));
 
 		UserEntity user = new UserEntity("10", "Caio", "caio1", "123456", "ordinary");
-		AdressEntity adress = new AdressEntity("1", "2", "3", "4", "5");
+		AdressEntity adress = new AdressEntity("1", "2", "3", "4", "5", null);
 		EmailEntity email = new EmailEntity("aasasa@asasa.com");
 		TelephoneEntity telephone = new TelephoneEntity("fixo", "21220190");
 		log.info("adress - " + adress);

@@ -2,6 +2,7 @@ package com.github.gpm22.ServicoCadastroDeUsuarios.controllers;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,10 +42,24 @@ public class Controller {
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/authenticate", produces = "application/json")
 	public ResponseEntity authenticateUser(@RequestBody String response) {
+
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.authenticateUser(response));
+
+			UserEntity user = userService.authenticateUser(response);
+
+			log.info("user: " + user);
+
+			if (user == null) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha Incorreta!");
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+
+		} catch (EmptyResultDataAccessException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário Inexistente!");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -64,28 +79,25 @@ public class Controller {
 	public ResponseEntity updateUser(@RequestBody String response, @PathVariable String cpf) {
 
 		try {
-			
+
 			UserEntity userUpdate = userService.parser(new JSONObject(response));
-			
-			if(userUpdate == null) {
-				return ResponseEntity.status(HttpStatus.OK)
-						.body(userService.getById(cpf));
+
+			if (userUpdate == null) {
+				return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf));
 			}
-			
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(userService.update(userUpdate));
+
+			return ResponseEntity.status(HttpStatus.OK).body(userService.update(userUpdate));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping(value = "/delete-user/{cpf}")
 	public ResponseEntity deleteUser(@PathVariable String cpf) {
 
 		try {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(userService.remove(userService.getById(cpf).get()));
+			return ResponseEntity.status(HttpStatus.OK).body(userService.remove(userService.getById(cpf).get()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}

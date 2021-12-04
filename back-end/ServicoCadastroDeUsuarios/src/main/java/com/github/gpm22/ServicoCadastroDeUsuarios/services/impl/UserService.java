@@ -149,6 +149,7 @@ public class UserService implements IUserService {
 		}
 	}
 
+	@Override
 	public UserEntity parser(JSONObject json) {
 		UserEntity user = new UserEntity();
 
@@ -179,15 +180,18 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public boolean authenticateUser(String response) {
+	public UserEntity authenticateUser(String response) {
 		JSONObject json = new JSONObject(response);
 		return authenticateUser(json.getString("username"), json.getString("password"));
 	}
 
-	@Override
-	public boolean authenticateUser(String userName, String password) {
+	private UserEntity authenticateUser(String userName, String password) {
 		Optional<UserEntity> user = userRepository.findByUserName(userName);
-		return passwordEncoder.matches(password, user.get().getPassword());
+		if(passwordEncoder.matches(password, user.get().getPassword())) {
+			return user.get();
+		}
+		
+		return null;
 	}
 
 }

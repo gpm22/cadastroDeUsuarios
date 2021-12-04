@@ -32,6 +32,8 @@ public class AdressEntity{
 	private String cep;
 	@Column(name="adress_publicplace")
 	private String publicPlace;
+	@Column(name="adress_complement")
+	private String complement;
 	@Column(name="adress_district")
 	private String district;
 	@Column(name="adress_city")
@@ -44,13 +46,14 @@ public class AdressEntity{
 	@OneToMany( mappedBy="adress", cascade = CascadeType.PERSIST)
 	private Set<UserEntity> users;
 	
-	public AdressEntity(String cep, String publicPlace, String district, String city, String uf) {
+	public AdressEntity(String cep, String publicPlace, String district, String city, String uf, String complement) {
 		super();
 		this.cep = cep;
 		this.publicPlace = publicPlace;
 		this.district = district;
 		this.city = city;
 		this.uf = uf;
+		this.complement = complement;
 		this.users = new HashSet<>();
 	}
 	
