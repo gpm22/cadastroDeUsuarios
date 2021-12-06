@@ -8,9 +8,9 @@ import Login from "./login/Login";
 import NotFound from "./not-found/NotFound";
 
 const user = {
-  cpf: "00000000000",
-  name: "administrador",
-  username: "admin",
+  cpf: "22222222222",
+  name: "testador",
+  username: "tester",
   password: "123456",
   role: "administrator",
   emails: [
@@ -27,12 +27,12 @@ const user = {
     {
       id: 0,
       type: "fixo",
-      number: "6132818210",
+      number: "0000000000",
     },
     {
       id: 1,
       type: "celular",
-      number: "61992818210",
+      number: "00000000000",
     },
   ],
   adress: {

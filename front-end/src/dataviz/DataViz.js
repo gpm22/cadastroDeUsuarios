@@ -1,5 +1,6 @@
 import React from "react";
 import PersonalData from "./personal-data/PersonalData";
+import { useLocation } from "react-router";
 import Adress from "./adress/Adress";
 import AccountData from "./account-data/AccountData";
 import Header from "../commons/ProjectHeader";
@@ -8,14 +9,21 @@ import Footer from "../commons/ProjectFooter";
 import "./DataViz.css";
 
 const DataViz = (props) => {
+
+  const location = useLocation();
+
+  let user = ( location.state? location.state : props.user);
+  let loged = ( location.state? true : false);
+  let role = user.role;
+
   return (
     <>
-      <Header />
+      <Header loged={loged} role={role} />
       <div className="dataviz-block">
         <h1>Dados do Usuário</h1>
-        <PersonalData user={props.user} />
-        <Adress adress={props.user.adress} />
-        <AccountData user={props.user} />
+        <PersonalData user={user} />
+        <Adress adress={user.adress} />
+        <AccountData user={user} />
       </div>
       <Footer />
     </>

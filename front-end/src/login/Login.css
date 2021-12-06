@@ -1,6 +1,6 @@
 .login-block {
   width: 320px;
-  height: 280px;
+  min-height: 280px;
   min-height: 280px;
   min-width: 320px;
   text-align: center;
@@ -14,6 +14,10 @@
   margin: 100px auto;
 }
 
+.login-block .error {
+  color: #f5473b;
+}
+
 .login-block input[type="button"] {
   transition: 0.3s;
   width: 50%;
@@ -25,13 +29,17 @@
   font-weight: bold;
 }
 
-.login-block input[type="button"]:hover {
+.login-block input[type="button"]:hover, .login-block input[type="button"]:disabled {
   background-color: #ddd;
   border-color: limegreen;
   border-width: 3px;
   border-style: solid;
   color: #222;
   cursor: pointer;
+}
+
+.login-block input[type="button"]:disabled {
+  cursor: default;
 }
 
 .login-block input[type="text"],
@@ -50,9 +58,6 @@
 
 #login-wrapper > footer {
   position: fixed;
-  width: 100%;
-  margin: 0;
-  padding: 0;
   bottom: 0;
 }
 
