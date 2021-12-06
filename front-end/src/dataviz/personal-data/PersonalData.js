@@ -22,10 +22,10 @@ function PersonalData(props) {
     );
   };
 
-  const emails = props.user.emails.map((email) => <p>{email.email}</p>);
+  const emails = props.user.emails.map((email) => <p key={email.id}>{email.email}</p>);
 
   const telephones = props.user.telephones.map((telephone) => (
-    <Telephone telephone={telephone} />
+    <Telephone key={telephone.number} telephone={telephone} />
   ));
 
   return (

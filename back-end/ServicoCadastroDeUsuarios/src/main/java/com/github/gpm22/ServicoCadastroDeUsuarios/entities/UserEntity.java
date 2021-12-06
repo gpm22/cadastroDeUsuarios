@@ -28,7 +28,7 @@ public class UserEntity{
 	@Column(name="user_name")
 	private String name;
 	@Column(name="user_username", unique=true)
-	private String userName;
+	private String username;
 	@Column(name="user_password")
 	private String password;
 	@Column(name="user_role")
@@ -50,7 +50,7 @@ public class UserEntity{
 		super();
 		this.cpf = cpf;
 		this.name = name;
-		this.userName = userName;
+		this.username = userName;
 		this.password = password;
 		this.role = role;
 		this.emails = new HashSet<>();

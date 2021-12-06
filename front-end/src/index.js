@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import DataViz from "./dataviz/DataViz";
 import Login from "./login/Login";
 import NotFound from "./not-found/NotFound";
@@ -49,7 +48,7 @@ const user = {
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Login />} />
       <Route path="dados-do-usuario" element={<DataViz user={user} />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<NotFound />} />

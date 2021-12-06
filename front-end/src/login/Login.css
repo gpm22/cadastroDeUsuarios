@@ -1,7 +1,7 @@
 .login-block {
   width: 320px;
   min-height: 280px;
-  min-height: 280px;
+  max-height: 300px; 
   min-width: 320px;
   text-align: center;
   font-size: large;
@@ -14,34 +14,6 @@
   margin: 100px auto;
 }
 
-.login-block .error {
-  color: #f5473b;
-}
-
-.login-block input[type="button"] {
-  transition: 0.3s;
-  width: 50%;
-  height: 30px;
-  margin: 0 25%;
-  background-color: #111;
-  color: limegreen;
-  border-radius: 15px;
-  font-weight: bold;
-}
-
-.login-block input[type="button"]:hover, .login-block input[type="button"]:disabled {
-  background-color: #ddd;
-  border-color: limegreen;
-  border-width: 3px;
-  border-style: solid;
-  color: #222;
-  cursor: pointer;
-}
-
-.login-block input[type="button"]:disabled {
-  cursor: default;
-}
-
 .login-block input[type="text"],
 .login-block input[type="password"] {
   width: 100%;
@@ -49,7 +21,7 @@
 }
 
 #invisible-header {
-  height: 100px;
+  height: 70px;
 }
 
 .login-block h1 {

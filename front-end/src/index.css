@@ -38,3 +38,39 @@ input[type="password"]:hover {
   color: #000;
   border-color: lime;
 }
+
+.error {
+  color: #f5473b;
+  margin: 10px 0;
+  display: block;
+}
+
+.sucess {
+  color: limegreen;
+  margin: 10px 0;
+  display: block;
+}
+
+input[type="button"] {
+  transition: 0.3s;
+  width: 160px;
+  height: 30px;
+  margin: 0 25%;
+  background-color: #111;
+  color: limegreen;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+input[type="button"]:hover, input[type="button"]:disabled {
+  background-color: #ddd;
+  border-color: limegreen;
+  border-width: 3px;
+  border-style: solid;
+  color: #222;
+  cursor: pointer;
+}
+
+input[type="button"]:disabled {
+  cursor: default;
+}

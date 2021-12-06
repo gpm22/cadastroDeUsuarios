@@ -3,6 +3,8 @@ import "./Login.css";
 import ProjectFooter from "../commons/ProjectFooter";
 import ProjectHeader from "../commons/ProjectHeader";
 import { useNavigate } from "react-router-dom";
+import { useFormInput, authenticateUser } from "../commons/CommonFunctions";
+import InputButton from "../commons/InputButton";
 
 function Login(props) {
   const username = useFormInput("");
@@ -14,19 +16,10 @@ function Login(props) {
   let navigate = useNavigate();
 
   async function login() {
-    return await fetch(
-      "http://localhost:8080/cadastro-de-usuarios/authenticate",
-      {
-        method: "post",
-        body: JSON.stringify({
-          username: username.value,
-          password: password.value,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    return await  authenticateUser({
+      username: username.value,
+      password: password.value,
+    })
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
@@ -48,7 +41,6 @@ function Login(props) {
       });
   }
 
-  // handle button click of login form
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -59,7 +51,7 @@ function Login(props) {
     if (loged) {
       navigate("/dados-do-usuario", { state: user });
     }
-  }, [loged]);
+  }, [loged, navigate, user]);
 
   return (
     <div id="login-wrapper">
@@ -81,34 +73,19 @@ function Login(props) {
         </div>
         {error && (
           <>
-            <br />
             <small className="error">{error}</small>
+          </>
+        )}
+        {!error && (
+          <>
             <br />
           </>
         )}
-        <br />
-        <input
-          type="button"
-          value={loading ? "Carregando..." : "Entrar"}
-          onClick={handleLogin}
-          disabled={loading}
-        />
+          <InputButton loading={loading} handleOnClick={handleLogin} value="Entrar" />
       </div>
       <ProjectFooter />
     </div>
   );
 }
-
-const useFormInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-  return {
-    value,
-    onChange: handleChange,
-  };
-};
 
 export default Login;

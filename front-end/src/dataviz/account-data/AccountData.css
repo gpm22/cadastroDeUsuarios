@@ -2,7 +2,7 @@
     display: inline-block;
 }
 
-.account-data-block h3 + p, br + p{
+.account-data-block h3 + p, br + p, .account-data-block small{
     text-indent: 30px;
 }
 .account-data-block input {

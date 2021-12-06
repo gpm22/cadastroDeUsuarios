@@ -92,7 +92,7 @@ public class UserService implements IUserService {
 			}
 
 			throw new DataIntegrityViolationException(
-					"O nome de usuário \"" + user.getUserName() + "\" já foi utilizado");
+					"O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
 		}
 	}
 
@@ -145,7 +145,7 @@ public class UserService implements IUserService {
 			}
 
 			throw new DataIntegrityViolationException(
-					"O nome de usuário \"" + user.getUserName() + "\" já foi utilizado");
+					"O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
 		}
 	}
 
@@ -155,7 +155,7 @@ public class UserService implements IUserService {
 
 		user.setCpf(json.getString("cpf"));
 		user.setName(json.getString("name"));
-		user.setUserName(json.getString("username"));
+		user.setUsername(json.getString("username"));
 		user.setPassword(passwordEncoder.encode(json.getString("password")));
 		user.setRole(json.getString("role"));
 

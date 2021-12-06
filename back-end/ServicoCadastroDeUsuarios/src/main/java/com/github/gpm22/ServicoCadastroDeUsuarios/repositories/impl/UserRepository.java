@@ -40,10 +40,10 @@ public class UserRepository implements IUserRepository {
 	}
 
 	@Override
-	public Optional<UserEntity> findByUserName(String userName) {
+	public Optional<UserEntity> findByUserName(String username) {
 		return Optional.ofNullable(
-				(UserEntity) entityManager.createQuery("Select t from UserEntity t where t.userName = :userName")
-						.setParameter("userName", userName).getSingleResult());
+				(UserEntity) entityManager.createQuery("Select t from UserEntity t where t.username = :username")
+						.setParameter("username", username).getSingleResult());
 	}
 
 	@Override
