@@ -13,12 +13,10 @@ const DataViz = (props) => {
   const location = useLocation();
 
   let user = ( location.state? location.state : props.user);
-  let loged = ( location.state? true : false);
-  let role = user.role;
 
   return (
     <>
-      <Header loged={loged} role={role} />
+      <Header user={user} />
       <div className="dataviz-block">
         <h1>Dados do Usuário</h1>
         <PersonalData user={user} />

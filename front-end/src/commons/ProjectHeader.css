@@ -10,7 +10,7 @@ header {
   background-color: #222;
 }
 
-header button {
+header button, .navbar-header a {
   margin: auto 0;
 
   background-color: inherit;
@@ -19,7 +19,8 @@ header button {
   border-style: none;
 }
 
-header button a {
+header button a,
+.navbar-header a {
   font-weight: bold;
   font-size: x-large;
   color: #ddd;
@@ -28,14 +29,30 @@ header button a {
   text-decoration: none;
 }
 
-header button a:hover {
+.navbar-header .active {
+  color: green;
+}
+
+.navbar-header {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+header button a:hover,
+.navbar-header a:hover {
   color: lime;
 }
 
 header span {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 400px;
+}
+
+header span h1{
+  margin-left: 20px;
 }
 
 header img {
@@ -46,10 +63,18 @@ header h1 {
   margin: auto 0;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   header {
     margin: 0;
     padding: auto;
     flex-direction: column;
+  }
+
+  header span {
+    width: 100%;
+  }
+
+  .navbar-header {
+    width: 100%;
   }
 }
