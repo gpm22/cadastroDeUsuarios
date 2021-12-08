@@ -4,12 +4,12 @@ import InputButton from "../commons/InputButton";
 import ReactInputMask from "react-input-mask";
 
 function AdressForm(props) {
-  const cep = useFormInput("");
-  const uf = useFormInput("");
-  const city = useFormInput("");
-  const district = useFormInput("");
-  const publicPlace = useFormInput("");
-  const complement = useFormInput("");
+  const cep = useFormInput(props.adress ? props.adress.cep :"");
+  const uf = useFormInput(props.adress ? props.adress.uf :"");
+  const city = useFormInput(props.adress ? props.adress.city :"");
+  const district = useFormInput(props.adress ? props.adress.district :"");
+  const publicPlace = useFormInput(props.adress ? props.adress.publicPlace :"");
+  const complement = useFormInput(props.adress ? props.adress.complement :"");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 

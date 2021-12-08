@@ -42,6 +42,15 @@ export const getAllUsers = () => {
   );
 };
 
+export const deleteUser = (userCpf) => {
+  return fetch(
+    "http://localhost:8080/cadastro-de-usuarios/delete-user/" + userCpf,
+    {
+      method: "delete"
+    }
+  );
+}
+
 export const createUser = (user) => {
   return fetch(
     "http://localhost:8080/cadastro-de-usuarios/create-user/",

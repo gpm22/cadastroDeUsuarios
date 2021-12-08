@@ -1,35 +1,72 @@
 .alteration-block {
-    height: 100%;
-    margin: 150px 0;
+  height: 100%;
+  margin: 150px 0;
 }
 
+.alteration-block h1 {
+    margin-left: 5%;
+    margin-bottom: 2%;
+  }
+  
+
 .alteration-loading-block {
-    height: 100%;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .alteration-loading-block .loader {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 .alteration-block footer {
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
 }
 
-.alteration-table{
-    display: block;
-    width: 100%;
-    padding: 0 5%;
-    box-sizing: border-box;
-    text-align: center;
-    font-weight: bold;
+.alteration-table {
+  display: block;
+  width: 100%;
+  padding: 0 5%;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: bold;
 }
-.alteration-table th, .alteration-table td {
-    border: 1px solid lime;
-    margin: 0px 5px;
-    background-color: #111;
+.alteration-table th,
+.alteration-table td {
+  min-width: 100px;
+  border: 1px solid lime;
+  background-color: #1b1b1b;
+}
+.alteration-table .alteration-button-edit,
+.alteration-table .alteration-button-remove {
+    width: 80px;
+    margin: 10px auto;
+    
+}
+
+.alteration-table .alteration-button-remove {
+    background-color: #f5473b;
+    color: #000;
+    
+}
+
+.alteration-table .alteration-button-edit {
+    background-color: yellowgreen;
+    color: #000;
+}
+
+.alteration-table .alteration-button-remove:hover {
+    color: #f5473b;
+    background-color: #000;
+    border-color: #f5473b;
+    
+}
+
+.alteration-table .alteration-button-edit:hover {
+    color: yellowgreen;
+    background-color: #000;
+    border-color: yellowgreen;
 }

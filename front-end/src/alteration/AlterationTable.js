@@ -7,27 +7,25 @@ const AlterationTable = (props) => {
   });
 
   return (
-    <>
-      <h2>Usuários:</h2>
-      <table className="alteration-table">
-        <thead>
-          <tr>
-            <th>Nome de Usuário</th>
-            <th>Nome Completo</th>
-            <th>CPF</th>
-            <th>Telefones</th>
-            <th>Emails</th>
-            <th>CEP</th>
-            <th>UF</th>
-            <th>Cidade</th>
-            <th>Bairro</th>
-            <th>Logradouro</th>
-            <th>Complemento</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </>
+    <table className="alteration-table">
+      <thead>
+        <tr>
+          <th>Nome de Usuário</th>
+          <th>Nome Completo</th>
+          <th>CPF</th>
+          <th>Telefones</th>
+          <th>Emails</th>
+          <th>CEP</th>
+          <th>UF</th>
+          <th>Cidade</th>
+          <th>Bairro</th>
+          <th>Logradouro</th>
+          <th>Complemento</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
   );
 };
 

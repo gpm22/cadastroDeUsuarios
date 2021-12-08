@@ -1,5 +1,7 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.controllers;
 
+import java.util.NoSuchElementException;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -38,7 +40,7 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/retornar-usuarios", produces = "application/json")
 	public ResponseEntity getAll() {
@@ -62,7 +64,7 @@ public class Controller {
 			if (user == null) {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha Incorreta!");
 			}
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 
 		} catch (EmptyResultDataAccessException e) {
@@ -99,7 +101,10 @@ public class Controller {
 			}
 
 			return ResponseEntity.status(HttpStatus.OK).body(userService.update(userUpdate));
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário Inexistente!");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}

@@ -13,7 +13,6 @@ function TelephoneForm(props) {
   if(type.value==="" &&  props.telephone.type!==""){
     type.setValue(props.telephone.type);
   }
-
   
   useEffect(() => {
     props.callBack({

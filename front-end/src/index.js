@@ -7,6 +7,7 @@ import Login from "./login/Login";
 import NotFound from "./not-found/NotFound";
 import Form from "./form/Form";
 import Alteration from "./alteration/Alteration";
+import EditUser from "./alteration/EditUser";
 
 const user = {
   cpf: "22222222222",
@@ -54,6 +55,7 @@ ReactDOM.render(
       <Route path="dados-do-usuario" element={<DataViz user={user} />} />
       <Route path="cadastro-de-usuario" element={<Form user={user} />} />
       <Route path="alteracao-de-usuario" element={<Alteration user={user} />} />
+      <Route path="alteracao-de-usuario/editar-usuario" element={<EditUser user={user} />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

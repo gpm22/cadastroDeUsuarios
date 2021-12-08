@@ -4,15 +4,21 @@ import TelephoneForm from "./TelephoneForm";
 import ReactInputMask from "react-input-mask";
 
 const PersonalDataForm = (props) => {
-  const name = useFormInput("");
-  const cpf = useFormInput("");
-  let [emails, setEmails] = useState([""]);
-  let [telephones, setTelephones] = useState([
-    {
-      type: "",
-      number: "",
-    },
-  ]);
+  const name = useFormInput(props.personalData ? props.personalData.name : "");
+  const cpf = useFormInput(props.personalData ? props.personalData.cpf : "");
+  let [emails, setEmails] = useState(
+    props.personalData ? [...props.personalData.emails] : [""]
+  );
+  let [telephones, setTelephones] = useState(
+    props.personalData
+      ? [...props.personalData.telephones]
+      : [
+          {
+            type: "",
+            number: "",
+          },
+        ]
+  );
 
   const handleChange = (e) => {
     let emailsCopy = [...emails];
@@ -104,7 +110,7 @@ const PersonalDataForm = (props) => {
         </span>
         <input
           key={index}
-          value={value}
+          value={value.email? value.email : value}
           type="email"
           title={index}
           autoComplete="email"
@@ -121,9 +127,13 @@ const PersonalDataForm = (props) => {
   useEffect(() => {
     props.callBack({
       name: name.value,
-      cpf: cpf.value.replaceAll(/[(. -]/ig, ""),
+      cpf: cpf.value.replaceAll(/[(. -]/gi, ""),
       telephones: telephones,
       emails: emails.map((value) => {
+        if(value.id > -1) {
+          return value;
+        }
+
         return {
           email: value,
         };
@@ -138,11 +148,14 @@ const PersonalDataForm = (props) => {
         <b>Nome Completo:</b>
       </p>{" "}
       <input type="text" {...name} autoComplete="name" required />
-      <p>
-        {" "}
-        <b>CPF:</b>
-      </p>{" "}
-      <ReactInputMask type="text" mask="999.999.999-99" {...cpf} required/>
+      {!props.personalData && (
+        <>
+          <p>
+            <b>CPF:</b>
+          </p>
+          <ReactInputMask type="text" mask="999.999.999-99" {...cpf} required />
+        </>
+      )}
       <section className="emails">
         <h3>Emails</h3>{" "}
         <span>

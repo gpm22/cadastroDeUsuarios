@@ -54,7 +54,6 @@ const Form = (props) => {
     role: "ordinary"
   });
 
-  console.log(newUser);
 
   useEffect(() => {
     setNewUser({
