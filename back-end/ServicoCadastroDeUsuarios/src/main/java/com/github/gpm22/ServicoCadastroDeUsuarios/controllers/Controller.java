@@ -38,6 +38,16 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value = "/retornar-usuarios", produces = "application/json")
+	public ResponseEntity getAll() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/authenticate", produces = "application/json")
@@ -67,9 +77,11 @@ public class Controller {
 	@PostMapping(value = "/create-user", consumes = "application/json")
 	public ResponseEntity createUser(@RequestBody String response) {
 		try {
+			log.info(response);
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(userService.insert(userService.parser(new JSONObject(response))));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}

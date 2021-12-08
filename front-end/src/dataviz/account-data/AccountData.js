@@ -55,7 +55,6 @@ function AccountData(props) {
       } else {
         setLoading(true);
         props.user.password = newPassword1.value;
-        console.log(JSON.stringify(props.user));
         updateUser(props.user)
         .then((response) => {
           if (response.ok) {

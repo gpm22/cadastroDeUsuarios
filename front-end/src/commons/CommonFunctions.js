@@ -1,14 +1,19 @@
 import { useState } from "react";
 
 export const useFormInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue1] = useState(initialValue);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setValue1(e.target.value);
+  };
+
+  const setValue = (e) => {
+    setValue1(e);
   };
   return {
     value,
     onChange: handleChange,
+    setValue: setValue
   };
 };
 
@@ -24,6 +29,33 @@ export const updateUser = (user) => {
     }
   );
 };
+
+export const getAllUsers = () => {
+  return fetch(
+    "http://localhost:8080/cadastro-de-usuarios/retornar-usuarios",
+    {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+export const createUser = (user) => {
+  return fetch(
+    "http://localhost:8080/cadastro-de-usuarios/create-user/",
+    {
+      method: "post",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+
 
 export const authenticateUser = (userInformations) => {
   return fetch("http://localhost:8080/cadastro-de-usuarios/authenticate", {

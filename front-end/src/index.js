@@ -6,7 +6,7 @@ import DataViz from "./dataviz/DataViz";
 import Login from "./login/Login";
 import NotFound from "./not-found/NotFound";
 import Form from "./form/Form";
-import EdicaoRemocao from "./edicao-remocao/EdicaoRemocao";
+import Alteration from "./alteration/Alteration";
 
 const user = {
   cpf: "22222222222",
@@ -53,7 +53,7 @@ ReactDOM.render(
       <Route path="/" element={<Login />} />
       <Route path="dados-do-usuario" element={<DataViz user={user} />} />
       <Route path="cadastro-de-usuario" element={<Form user={user} />} />
-      <Route path="alteracao-de-usuario" element={<EdicaoRemocao user={user} />} />
+      <Route path="alteracao-de-usuario" element={<Alteration user={user} />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

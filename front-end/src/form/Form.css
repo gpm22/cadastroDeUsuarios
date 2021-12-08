@@ -2,6 +2,10 @@
     margin: 150px 0 50px 50px;
 }
 
-.form-block p + p, .form-block h2 + p, .form-block h3 + p  {
+.form-block input + p, .form-block h2 + p, .form-block h3 + p  {
     text-indent: 30px;
+}
+
+.form-block h3, .form-block h4 {
+    display: inline-block;
 }

@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,27 +11,50 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
+select[type="text"],
+option {
+  width: 200px;
+  border-radius: 5px;
+}
+
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select[type="text"],
+option {
   margin-top: 10px;
+  width: 200px;
   background-color: #111;
   height: 30px;
   color: limegreen;
-  border-radius: 15px;
   text-align: center;
   font-weight: bold;
   transition: 0.3s;
   box-sizing: border-box;
 }
 
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+  border-radius: 15px;
+}
+
 input[type="text"]:focus,
 input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select[type="text"]:focus,
+select[type="text"]:hover,
 input[type="text"]:hover,
-input[type="password"]:hover {
+input[type="password"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover {
   border-style: solid;
   border-width: 2px;
   background-color: #fff;
@@ -62,7 +85,8 @@ input[type="button"] {
   font-weight: bold;
 }
 
-input[type="button"]:hover, input[type="button"]:disabled {
+input[type="button"]:hover,
+input[type="button"]:disabled {
   background-color: #ddd;
   border-color: limegreen;
   border-width: 3px;
@@ -74,3 +98,57 @@ input[type="button"]:hover, input[type="button"]:disabled {
 input[type="button"]:disabled {
   cursor: default;
 }
+
+input[type="button"].button-delete,
+input[type="button"].button-add {  
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0;
+  margin: auto 0;
+}
+
+input[type="button"].button-delete {
+  height: 100px;
+  background-color: #222;
+  border-style: none;
+  color: #f5473b;
+  font-size: 40px;
+}
+
+input[type="button"].button-add:hover {
+  background-color: lime;
+  border-color: limegreen;
+  color: darkgreen;
+}
+
+input[type="button"].button-delete:hover {
+  color:#fff;
+  font-size: 44px;
+}
+
+input[type="button"].button-add {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: limegreen;
+  border: #000;
+  color: #222;
+}
+
+.loader {
+  border: 10px solid lime;
+  border-top: 10px solid green;
+  border-bottom: 10px solid green;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1.5s linear infinite;
+  margin: auto 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
