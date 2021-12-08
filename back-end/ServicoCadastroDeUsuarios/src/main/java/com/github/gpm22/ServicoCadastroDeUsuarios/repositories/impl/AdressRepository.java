@@ -23,6 +23,7 @@ public class AdressRepository implements IAdressRepository {
 	public AdressEntity insert(AdressEntity object) {
 		entityManager.persist(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -42,6 +43,7 @@ public class AdressRepository implements IAdressRepository {
 	        entityManager.remove(ee);
 	    }
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -50,6 +52,7 @@ public class AdressRepository implements IAdressRepository {
 	public AdressEntity update(AdressEntity object) {
 		entityManager.merge(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 

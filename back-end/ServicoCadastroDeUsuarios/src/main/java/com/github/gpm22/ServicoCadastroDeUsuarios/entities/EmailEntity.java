@@ -3,6 +3,7 @@ package com.github.gpm22.ServicoCadastroDeUsuarios.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class EmailEntity{
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="user_cpf")
 	private UserEntity user;
 	

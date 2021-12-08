@@ -13,7 +13,10 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
 
+import lombok.extern.log4j.Log4j2;
+
 @Repository
+@Log4j2
 public class UserRepository implements IUserRepository {
 
 	@PersistenceContext
@@ -24,6 +27,7 @@ public class UserRepository implements IUserRepository {
 	public UserEntity insert(UserEntity object) {
 		entityManager.persist(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -57,6 +61,7 @@ public class UserRepository implements IUserRepository {
 			entityManager.remove(ee);
 		}
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -65,6 +70,7 @@ public class UserRepository implements IUserRepository {
 	public UserEntity update(UserEntity object) {
 		entityManager.merge(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 

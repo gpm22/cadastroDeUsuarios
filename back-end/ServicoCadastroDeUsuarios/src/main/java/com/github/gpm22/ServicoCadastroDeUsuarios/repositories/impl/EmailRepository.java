@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.EmailEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IEmailRepository;
 
+import lombok.extern.log4j.Log4j2;
+
 @Repository
+@Log4j2
 public class EmailRepository implements IEmailRepository {
 
 	@PersistenceContext
@@ -23,6 +26,7 @@ public class EmailRepository implements IEmailRepository {
 	public EmailEntity insert(EmailEntity object) {
 		entityManager.persist(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -35,14 +39,20 @@ public class EmailRepository implements IEmailRepository {
 	@Override
 	@Transactional
 	public EmailEntity remove(EmailEntity object) {
-
+		log.info("remove email: " + object);
 		if (entityManager.contains(object)) {
-	        entityManager.remove(object);
-	    } else {
-	    	EmailEntity ee = entityManager.getReference(object.getClass(), object.getId());
-	        entityManager.remove(ee);
-	    }
+			log.info("remove if antes email: " + object);
+			entityManager.remove(object);
+			log.info("remove if depois email: " + object);
+		} else {
+			log.info("remove else antes email: " + object);
+			EmailEntity ee = entityManager.getReference(object.getClass(), object.getId());
+			entityManager.remove(ee);
+			log.info("remove else depois email: " + object);
+		}
 		entityManager.flush();
+		entityManager.clear();
+		log.info("remove após flush e clear email: " + object);
 		return object;
 	}
 
@@ -51,6 +61,7 @@ public class EmailRepository implements IEmailRepository {
 	public EmailEntity update(EmailEntity object) {
 		entityManager.merge(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 

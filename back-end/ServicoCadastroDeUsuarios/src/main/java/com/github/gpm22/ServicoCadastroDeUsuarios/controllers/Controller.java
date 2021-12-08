@@ -116,6 +116,7 @@ public class Controller {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(userService.remove(userService.getById(cpf).get()));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}

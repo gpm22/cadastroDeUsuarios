@@ -72,6 +72,8 @@ public class UserService implements IUserService {
 					break;
 				}
 			}
+			
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 			return userRepository.insert(user);
 		} catch (DataIntegrityViolationException e) {
@@ -103,6 +105,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserEntity remove(UserEntity object) {
+		object.getAdress().getUsers().remove(object);
+		object.getTelephones().forEach((telephone) -> telephone.getUsers().remove(object));
 		userRepository.remove(object);
 		adressService.clean(object);
 		telephoneService.clean(object);
@@ -118,6 +122,11 @@ public class UserService implements IUserService {
 			if (user.equals(userOriginal)) {
 				return user;
 			}
+			
+			if(!user.getPassword().equals(userOriginal.getPassword())) {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
+			
 
 			if (user.getEmails().size() < userOriginal.getEmails().size()) {
 
@@ -125,12 +134,14 @@ public class UserService implements IUserService {
 
 				emailsExcluded.removeAll(user.getEmails());
 
-				emailsExcluded.forEach((email) -> emailService.remove(email));
-
-			}
+				emailsExcluded.forEach((email) -> {
+					emailService.remove(email);});
+				userOriginal.setEmails(user.getEmails());
+			}	
 
 			return userRepository.update(user);
 		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
 
 			if (e.getMessage().contains("PUBLIC.EMAILS(ADRESS_EMAIL)")) {
 
@@ -156,7 +167,7 @@ public class UserService implements IUserService {
 		user.setCpf(json.getString("cpf"));
 		user.setName(json.getString("name"));
 		user.setUsername(json.getString("username"));
-		user.setPassword(passwordEncoder.encode(json.getString("password")));
+		user.setPassword(json.getString("password"));
 		user.setRole(json.getString("role"));
 
 		AdressEntity adress = adressService.parser(json.getJSONObject("adress"));

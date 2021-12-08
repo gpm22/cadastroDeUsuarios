@@ -23,6 +23,7 @@ public class TelephoneRepository implements ITelephoneRepository {
 	public TelephoneEntity insert(TelephoneEntity object) {
 		entityManager.persist(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -42,6 +43,7 @@ public class TelephoneRepository implements ITelephoneRepository {
 			entityManager.remove(ee);
 		}
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 
@@ -50,6 +52,7 @@ public class TelephoneRepository implements ITelephoneRepository {
 	public TelephoneEntity update(TelephoneEntity object) {
 		entityManager.merge(object);
 		entityManager.flush();
+		entityManager.clear();
 		return object;
 	}
 

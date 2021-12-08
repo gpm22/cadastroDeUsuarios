@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class AdressEntity{
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	@OneToMany( mappedBy="adress", cascade = CascadeType.PERSIST)
+	@OneToMany( fetch = FetchType.EAGER, mappedBy="adress", cascade = CascadeType.PERSIST)
 	private Set<UserEntity> users;
 	
 	public AdressEntity(String cep, String publicPlace, String district, String city, String uf, String complement) {
