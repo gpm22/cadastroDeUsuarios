@@ -23,13 +23,14 @@
 
 .alteration-block footer {
   position: fixed;
+  background-color: #222;
   bottom: 0;
 }
 
 .alteration-table {
   display: block;
-  width: 100%;
-  padding: 0 5%;
+  width: 95%;
+  margin-left: 2.5%;
   box-sizing: border-box;
   text-align: center;
   font-weight: bold;

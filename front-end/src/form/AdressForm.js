@@ -11,6 +11,7 @@ function AdressForm(props) {
   const publicPlace = useFormInput(props.adress ? props.adress.publicPlace :"");
   const complement = useFormInput(props.adress ? props.adress.complement :"");
   const [error, setError] = useState(null);
+  const [changed, setChanged] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function getCepInfo(cepValue) {
@@ -47,6 +48,35 @@ function AdressForm(props) {
       });
   }
 
+  const isAdressesEquals = () => {
+
+    const objectToCompare = {
+      cep: cep.value.replaceAll(/[. -]/ig, ""),
+      uf: uf.value,
+      city: city.value,
+      district: district.value,
+      publicPlace: publicPlace.value,
+      complement: complement.value,
+    }
+
+    if(!props.adress){
+      return false;
+    }
+
+    for(let key of Object.keys(props.adress)){
+      if(key==="id"){
+        continue;
+      }
+
+      if(props.adress[key] !== objectToCompare[key]){
+        return false;
+      }
+    }
+
+    return true;
+
+  }
+
   const handleCep = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -54,14 +84,30 @@ function AdressForm(props) {
   };
 
   useEffect(() => {
-    props.callBack({
-      cep: cep.value.replaceAll(/[. -]/ig, ""),
-      uf: uf.value,
-      city: city.value,
-      district: district.value,
-      publicPlace: publicPlace.value,
-      complement: complement.value,
-    });
+
+    setChanged(!isAdressesEquals());
+
+    if(props.adress && !changed){
+      props.callBack({
+        id: props.adress.id,
+        cep: cep.value.replaceAll(/[. -]/ig, ""),
+        uf: uf.value,
+        city: city.value,
+        district: district.value,
+        publicPlace: publicPlace.value,
+        complement: complement.value,
+      });
+    } else {
+      props.callBack({
+        cep: cep.value.replaceAll(/[. -]/ig, ""),
+        uf: uf.value,
+        city: city.value,
+        district: district.value,
+        publicPlace: publicPlace.value,
+        complement: complement.value,
+      });
+
+    }
   }, [
     cep.value,
     uf.value,

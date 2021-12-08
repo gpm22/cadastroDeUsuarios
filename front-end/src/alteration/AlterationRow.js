@@ -36,11 +36,12 @@ const AlterationRow = (props) => {
         console.error(e);
 
       });
+    props.callBack();
   };
 
   const alterateUser = (e) => {
     e.preventDefault();
-    navigate("/alteracao-de-usuario/editar-usuario", {state: props.user})
+    navigate("/alteracao-de-usuario/editar-usuario", {state: {user:props.user, adm:props.adm}})
   };
 
   return (

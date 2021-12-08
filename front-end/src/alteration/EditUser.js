@@ -5,7 +5,6 @@ import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
 import PersonalDataForm from "../form/personal-data/PersonalDataForm";
 import AdressForm from "../form/AdressForm";
-import InputButton from "../commons/InputButton";
 import { updateUser } from "../commons/CommonFunctions";
 import "../form/Form.css";
 import AccountAlteration from "./AccountAlteration";
@@ -13,14 +12,16 @@ import AccountAlteration from "./AccountAlteration";
 const EditUser = (props) => {
   const location = useLocation();
   const [error, setError] = useState(null);
-  const [sucess, setSucess] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  let user = location.state ? location.state : props.user;
+  console.log(location.state);
+
+  let user = location.state ? location.state.user : props.user;
+  let adm  = location.state.adm;
 
   const loged = user != null;
-  const role = user.role === "administrator";
+  const role = adm.role === "administrator";
 
   const callBack = (setSt) => {
     return (st) => setSt(st);
@@ -52,7 +53,7 @@ const EditUser = (props) => {
       adress: { ...adress },
       ...userData,
       role: user.role,
-      password: user.password
+      password: user.password,
     });
   }, [personalData, adress, userData]);
 
@@ -61,9 +62,9 @@ const EditUser = (props) => {
       const response = await updateUser(newUser);
       if (response.ok) {
         response.json().then((data) => {
-          setSucess("Usuário Editado com Sucesso!");
+          alert("Usuário Editado com Sucesso!");
           setError(null);
-          navigate("/alteracao-de-usuario");
+          navigate(-1);
         });
       } else {
         response.text().then((text) => {
@@ -78,7 +79,7 @@ const EditUser = (props) => {
     }
   };
 
-  const handleCreate = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     setLoading(true);
     executeUpdateUser();
@@ -86,11 +87,11 @@ const EditUser = (props) => {
 
   return (
     <>
-      <Header user={user} loged={loged} />
-      <form className="form-block">
+      <Header user={adm} loged={loged} />
+      <form className="form-block" onSubmit={handleUpdate}>
         {role && (
           <>
-            <h1>Cadastro de Usuários</h1>
+            <h1>Alteração de Usuários</h1>
             <PersonalDataForm
               personalData={personalData}
               callBack={callBack(setPersonalData)}
@@ -105,20 +106,11 @@ const EditUser = (props) => {
                 <small className="error">{error}</small>
               </>
             )}
-            {sucess && (
-              <>
-                <small className="sucess">{sucess}</small>
-              </>
-            )}
-            {!error && !sucess && (
-              <>
-                <br />
-              </>
-            )}
-            <InputButton
-              loading={loading}
-              handleOnClick={handleCreate}
-              value="Alterar Usuário"
+            <input
+              type="submit"
+              className="submit-button"
+              disabled={props.loading}
+              value={loading ? "Carregando..." : "Alterar Usuário"}
             />
           </>
         )}

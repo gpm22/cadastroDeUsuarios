@@ -116,6 +116,7 @@ const PersonalDataForm = (props) => {
           autoComplete="email"
           required
           onChange={handleChange}
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
         />
         {button}
       </>
@@ -147,7 +148,7 @@ const PersonalDataForm = (props) => {
         {" "}
         <b>Nome Completo:</b>
       </p>{" "}
-      <input type="text" {...name} autoComplete="name" required />
+      <input type="text" tile="deve ser entre 3-100 caracteres alfanuméricos e espaço" {...name} autoComplete="name" required minLength="3" maxLength="100" pattern="[a-zA-Z0-9\s]+"/>
       {!props.personalData && (
         <>
           <p>

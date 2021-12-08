@@ -6,7 +6,6 @@ import Footer from "../commons/ProjectFooter";
 import PersonalDataForm from "./personal-data/PersonalDataForm";
 import AdressForm from "./AdressForm";
 import AccountForm from "./AccountForm";
-import InputButton from "../commons/InputButton";
 import { createUser, cpfChecker } from "../commons/CommonFunctions";
 import "./Form.css";
 
@@ -22,8 +21,6 @@ const Form = (props) => {
   const [sucess, setSucess] = useState(null);
   const [loading, setLoading] = useState(false);
   const [passwordEquals, setPasswordEquals] = useState(false);
-
-  console.log("form: "+ JSON.stringify(location));
 
   let user = location.state;// ? location.state : props.user;
 
@@ -111,7 +108,7 @@ const Form = (props) => {
   return (
     <>
       <Header user={user} loged={loged} />
-      <form className="form-block">
+      <form className="form-block"  onSubmit={handleCreate}>
         {role && (
           <>
             <h1>Cadastro de Usuários</h1>
@@ -136,10 +133,11 @@ const Form = (props) => {
                 <br />
               </>
             )}
-            <InputButton
-              loading={loading}
-              handleOnClick={handleCreate}
-              value="Criar Novo Usuário"
+            <input
+              type="submit"
+              className="submit-button"
+              disabled={props.loading}
+              value={loading ? "Carregando..." : "Criar Novo Usuário"}
             />
           </>
         )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
@@ -11,17 +11,21 @@ const Alteration = (props) => {
 
   let navigate = useNavigate();
 
-  if(location.state === null){
+  if (location.state === null) {
     navigate("/login");
   }
 
-  let user = location.state; 
+  let user = location.state;
   let [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const loged = user !== null;
-  const role = (user? user.role: "") === "administrator";
+  const role = (user ? user.role : "") === "administrator";
+
+  const callBack = () => {
+    window.location.reload(true);
+  };
 
   const execGetAllUsers = async () => {
     return await getAllUsers()
@@ -44,7 +48,9 @@ const Alteration = (props) => {
       });
   };
 
-  execGetAllUsers();
+  useEffect(() => {
+      execGetAllUsers();
+  }, []);
 
   return (
     <div className="alteration-block">
@@ -61,7 +67,7 @@ const Alteration = (props) => {
             <>
               <h1>Alteração de Usuários</h1>
               {error && <h1>{error}</h1>}
-              <AlterationTable users={users} />
+              <AlterationTable users={users} adm={user} callBack={callBack} />
             </>
           )}
         </>

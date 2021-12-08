@@ -15,10 +15,23 @@ function TelephoneForm(props) {
   }
   
   useEffect(() => {
-    props.callBack({
-      type: type.value,
-      number: number.value.replaceAll(/[() -]/ig, "")
-    });
+
+
+    if(props.telephone.id){
+
+      props.callBack({
+        id: props.telephone.id,
+        type: type.value,
+        number: number.value.replaceAll(/[() -]/ig, "")
+      });
+    } else {
+      props.callBack({
+        type: type.value,
+        number: number.value.replaceAll(/[() -]/ig, "")
+      });
+    }
+
+    
   }, [type.value, number.value]);
 
   return (
@@ -42,7 +55,7 @@ function TelephoneForm(props) {
             {...number}
             mask="(99) 99999-9999"
             autoComplete="number"
-            pattern="\([0-9]{2}\) [0-9]{4}-[0-9]{4}"
+            pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
             required />
         </>
       )}
