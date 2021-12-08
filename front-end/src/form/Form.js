@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
@@ -12,15 +12,23 @@ import "./Form.css";
 
 const Form = (props) => {
   const location = useLocation();
+  let navigate = useNavigate();
+
+  if(!location.state){
+    navigate("/");
+  }
+
   const [error, setError] = useState(null);
   const [sucess, setSucess] = useState(null);
   const [loading, setLoading] = useState(false);
   const [passwordEquals, setPasswordEquals] = useState(false);
 
-  let user = location.state ? location.state : props.user;
+  console.log("form: "+ JSON.stringify(location));
 
-  const loged = user != null;
-  const role = user.role === "administrator";
+  let user = location.state;// ? location.state : props.user;
+
+  const loged = user !== null;
+  const role = (user? user.role: "") === "administrator";
 
   const callBack = (setSt) => {
     return (st) => setSt(st);

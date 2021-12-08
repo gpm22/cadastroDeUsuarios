@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
 import { getAllUsers } from "../commons/CommonFunctions";
@@ -9,13 +9,19 @@ import "./Alteration.css";
 const Alteration = (props) => {
   const location = useLocation();
 
-  let user = location.state ? location.state : props.user;
+  let navigate = useNavigate();
+
+  if(location.state === null){
+    navigate("/login");
+  }
+
+  let user = location.state; 
   let [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const loged = user !== null;
-  const role = user.role === "administrator";
+  const role = (user? user.role: "") === "administrator";
 
   const execGetAllUsers = async () => {
     return await getAllUsers()

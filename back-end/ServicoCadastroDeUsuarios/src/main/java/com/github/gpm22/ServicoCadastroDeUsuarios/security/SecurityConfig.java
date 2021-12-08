@@ -15,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(new AntPathRequestMatcher("/**"));
 
+	
 	@Override
 	public void configure(final WebSecurity web) {
 		web.ignoring().requestMatchers(PUBLIC_URLS);
@@ -24,4 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+
 }

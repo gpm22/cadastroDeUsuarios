@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./ProjectHeader.css";
 import user from "../user.svg";
 
 const Header = (props) => {
   const role = (props.user ? props.user.role : "") === "administrator";
+  const navigate = useNavigate();
 
   let button = props.user ? (
     <button>
@@ -12,35 +13,25 @@ const Header = (props) => {
     </button>
   ) : null;
 
-  let navbar =(
-      <navbar className="navbar-header">
-        <NavLink
-          to={{
-            pathname: "/dados-do-usuario",
-            state: { user: props.user },
-          }}
-        >
-          Dados
-        </NavLink>
-        <NavLink
-          to={{
-            pathname: "/cadastro-de-usuario",
-            state: { user: props.user },
-          }}
-        >
-          Cadastro
-        </NavLink>
-        <NavLink
-          to={{
-            pathname: "/alteracao-de-usuario",
-            state: { user: props.user },
-          }}
-        >
-          Alteração
-        </NavLink>
-        {button}
-      </navbar>
-    );
+  const goTo = (e) => {
+    e.preventDefault();
+    navigate(e.target.href.replace("http://localhost:3000", ""), { state: props.user });
+  };
+
+  let navbar = (
+    <nav className="navbar-header">
+      <a href="/dados-do-usuario" onClick={goTo}>
+        Dados
+      </a>
+      <a href="/cadastro-de-usuario" onClick={goTo}>
+        Cadastro
+      </a>
+      <a href="/alteracao-de-usuario" onClick={goTo}>
+        Alteração
+      </a>
+      {button}
+    </nav>
+  );
 
   return (
     <header>

@@ -49,6 +49,7 @@ function Login(props) {
 
   useEffect(() => {
     if (loged) {
+      //props.callBack(user);
       navigate("/dados-do-usuario", { state: user });
     }
   }, [loged, navigate, user]);
