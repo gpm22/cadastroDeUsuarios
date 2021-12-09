@@ -20,10 +20,6 @@ Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utili
 
 O **cliente** estará disponível na url **http://localhost:3000/**, enquanto os end-points do **serviço** estão disponíveis na url **http://localhost:8080/**, assim como o cliente do banco de dados H2 que fica disponível na url **http://localhost:8080/h2-console**.
 
-Ao entrar na url **http://localhost:3000/**, ou em qualquer url válida do sistema, o usuário será direcionando para a página de login:
-
-![login](C:\Users\GabrielPachêcoMilhom\Pictures\sistemaDeUsuarios\login.png)
-
-Enquanto que acessar uma url inválida do sistema irá redirecionar para a página de não encontrado:
+Ao entrar na url **http://localhost:3000/**, ou em qualquer url válida do sistema, o usuário será direcionando para a página de login, etretanto, quando acessar uma url inválida do sistema o usuário será redirecionado para a página de n**ão encontrado.**
 
  
