@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 public class UserService implements IUserService {
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder = null;
 
@@ -72,7 +72,7 @@ public class UserService implements IUserService {
 					break;
 				}
 			}
-			
+
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 			return userRepository.insert(user);
@@ -87,7 +87,8 @@ public class UserService implements IUserService {
 
 				for (EmailEntity email : user.getEmails()) {
 					if (emails.contains(email)) {
-						throw new DataIntegrityViolationException("O email \"" + email.getEmail() + "\" já foi utilizado");
+						throw new DataIntegrityViolationException(
+								"O email \"" + email.getEmail() + "\" já foi utilizado");
 					}
 				}
 
@@ -119,14 +120,15 @@ public class UserService implements IUserService {
 
 			UserEntity userOriginal = userRepository.findById(user.getCpf()).get();
 
-			if (user.equals(userOriginal)) {
+			if (user.equals(userOriginal) && user.getTelephones().equals(userOriginal.getTelephones())
+					&& user.getEmails().equals(userOriginal.getEmails())
+					&& user.getAdress().equals(userOriginal.getAdress())) {
 				return user;
 			}
-			
-			if(!user.getPassword().equals(userOriginal.getPassword())) {
+
+			if (!user.getPassword().equals(userOriginal.getPassword())) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 			}
-			
 
 			if (user.getEmails().size() < userOriginal.getEmails().size()) {
 
@@ -135,9 +137,10 @@ public class UserService implements IUserService {
 				emailsExcluded.removeAll(user.getEmails());
 
 				emailsExcluded.forEach((email) -> {
-					emailService.remove(email);});
+					emailService.remove(email);
+				});
 				userOriginal.setEmails(user.getEmails());
-			}	
+			}
 
 			return userRepository.update(user);
 		} catch (DataIntegrityViolationException e) {
@@ -198,10 +201,10 @@ public class UserService implements IUserService {
 
 	private UserEntity authenticateUser(String userName, String password) {
 		Optional<UserEntity> user = userRepository.findByUserName(userName);
-		if(passwordEncoder.matches(password, user.get().getPassword())) {
+		if (passwordEncoder.matches(password, user.get().getPassword())) {
 			return user.get();
 		}
-		
+
 		return null;
 	}
 
