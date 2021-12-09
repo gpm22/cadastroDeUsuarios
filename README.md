@@ -27,58 +27,58 @@ Existem dois usuários já definidos no sistema e que podem ser utilizados:
 
 Ao entrar na url **http://localhost:3000/**, ou em qualquer url válida do sistema, o usuário será direcionando para a página de **login**:
 
-![login](C:\MeusProgramas\cadastroDeUsuarios\img\login.png)
+![login](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/login.png?raw=true)
 
 Por sua vez, quando acessar uma url inválida do sistema, o usuário será redirecionado para a página de **não encontrado**:
 
-![not-found](C:\MeusProgramas\cadastroDeUsuarios\img\not-found.png)
+![not-found](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/not-found.png?raw=true)
 
 Após a autenticação. o usuário é redirecionado para a página de **visualização de dados**:
 
-![dataviz](C:\MeusProgramas\cadastroDeUsuarios\img\dataviz.png)
+![dataviz](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/dataviz.png?raw=true)
 
 Essa tela contém todas as informações do usuário e uma seção de alterar a senha.
 
 No caso de usuários comuns, essa é a única tela disponível, então o header fica apenas com a opção de sair:
 
-![header-comum](C:\MeusProgramas\cadastroDeUsuarios\img\header-comum.png)
+![header-comum](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/header-comum.png?raw=true)
 
 Para o usuário administrador ainda existem as telas de cadastrar novos usuários e a de modificar/deletar usuários, como pode ser visto na imagem da página de visualização de dados no seu header.
 
  A tela de cadastro é um formulário que possui máscara para os campos **CPF, telefones**, que varia entre celular, residencial e comercial, e **CEP**, sendo que a persistência no sistema é feita sem máscara e o  **CPF** é verificado antes da inserção:
 
-![cadastro-de-usuarios](C:\MeusProgramas\cadastroDeUsuarios\img\cadastro-de-usuarios.png)
+![cadastro-de-usuarios](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/cadastro-de-usuarios.png?raw=true)
 
  Todos os campos são obrigatórios, com exceção do **complemento do endereço**. O nome completo deve ser entre 3-100 caracteres alfanuméricos e/ou espaços. A verificação da validade do **email** é simples, aceitando qualquer coisa no formato: xxxx@xxxx.xxx.
 
  Ao se clicar no botão de **+** é possível adicionar novos **emails** ou **telefones**:
 
- ![emails](C:\MeusProgramas\cadastroDeUsuarios\img\emails.png)
+ ![emails](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/emails.png?raw=true)
 
 Enquanto que apertando no botão **x** se exclui um dos **emails** ou **telefones**, porém é necessário que pelo menos um **email** e um **telefone** seja preenchido.
 
 O sistema está configurado para buscar o **CEP** do o usuário através da [API ViaCEP](https://viacep.com.br/) e preencher o formulário com a informações buscadas, sendo que o usuário pode modificá-las.
 
-| <img src="C:\MeusProgramas\cadastroDeUsuarios\img\endereco-antes.png" alt="endereco-antes" style="zoom:100%;" /> | <img src="C:\MeusProgramas\cadastroDeUsuarios\img\endereco-depois.png" alt="endereco-depois" style="zoom:100%;" /> |
+| <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-antes.png?raw=true" alt="endereco-antes" style="zoom:100%;" /> | <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-depois.png?raw=true" style="zoom:100%;" /> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 Acaso tente-se cadastrar uma conta com um **CPF** ou um **nome de usuário** já cadastrados, o sistema irá mostrar uma mensagem de erro.
 
 A tela de **alteração de usuários** contém uma tabela com todos os dados dos usuários:
 
-![alteracao](C:\MeusProgramas\cadastroDeUsuarios\img\alteracao.png)
+![alteracao](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/alteracao.png?raw=true)
 
 Ao se clicar em **remover** um modal é disparado:
 
-![alteracao](C:\MeusProgramas\cadastroDeUsuarios\img\modal-alteracao.png)
+![alteracao](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/modal-alteracao.png?raw=true)
 
 E ao clicar em **sim** o usuário é removido e a página recarregada:
 
-![alteracao-excluido](C:\MeusProgramas\cadastroDeUsuarios\img\alteracao-excluido.png)
+![alteracao-excluido](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/alteracao-excluido.png?raw=true)
 
 Ao se clicar em **editar** o usuário é redirecionado para a tela de **edição de usuários**, que é semelhante ao formulário de cadastro, mas com as informações já preenchidas e sem as seções de **CPF** e **senha**:
 
-![edicao-de-usuario](C:\MeusProgramas\cadastroDeUsuarios\img\edicao-de-usuario.png)
+![edicao-de-usuario](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/edicao-de-usuario.png?raw=true)
 
 Ao terminar a edição o usuário é redirecionado de volta para a tabela de usuários.
 
@@ -88,7 +88,7 @@ E por fim, ao se clicar em **sair** o usuário é redirecionado para a tela de *
 
 Foram criadas 4 tabelas no banco de dados com os seguintes campos e relações:
 
-![tabelas](C:\MeusProgramas\cadastroDeUsuarios\img\tabelas.jpg)
+![tabelas](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/tabelas.jpg?raw=true)
 
 Para fazer o **ORM** foram criadas 4 **entidades** com seus respectivos **repositórios** e **serviços**. Existe apenas um controlador para receber as requisições HTTP da aplicação contendo os seguintes end-points:
 
