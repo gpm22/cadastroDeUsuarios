@@ -9,3 +9,7 @@
 .form-block h3, .form-block h4 {
     display: inline-block;
 }
+
+.form-block input, .form-block select{
+    margin-left: 10px;
+}

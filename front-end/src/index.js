@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -8,6 +9,7 @@ import NotFound from "./not-found/NotFound";
 import Form from "./form/Form";
 import Alteration from "./alteration/Alteration";
 import EditUser from "./alteration/EditUser";
+
 
 ReactDOM.render(
   <BrowserRouter>

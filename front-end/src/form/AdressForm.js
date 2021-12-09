@@ -86,6 +86,7 @@ function AdressForm(props) {
   useEffect(() => {
 
     setChanged(!isAdressesEquals());
+    console.log("changed - " + changed);
 
     if(props.adress && !changed){
       props.callBack({
@@ -134,6 +135,7 @@ function AdressForm(props) {
         handleOnClick={handleCep}
         value="pesquisar CEP"
       />
+      <br/>
       <p>
         <b>UF:</b>{" "}
       </p>{" "}
@@ -142,6 +144,7 @@ function AdressForm(props) {
         <b>Cidade:</b>{" "}
       </p>{" "}
       <input type="text" {...city} autoComplete="city" required />
+      <br/>
       <p>
         <b>Bairro:</b>{" "}
       </p>{" "}
@@ -150,6 +153,7 @@ function AdressForm(props) {
         <b>Logradouro:</b>{" "}
       </p>{" "}
       <input type="text" {...publicPlace} autoComplete="publicPlace" required />
+      <br/>
       <p>
         <b>Complemento:</b>{" "}
       </p>{" "}

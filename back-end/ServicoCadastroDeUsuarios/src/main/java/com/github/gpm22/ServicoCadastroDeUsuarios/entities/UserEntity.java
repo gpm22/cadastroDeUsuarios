@@ -16,36 +16,40 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
-@Table(name="USERS")
-public class UserEntity{
-	
+@Table(name = "USERS")
+public class UserEntity {
+
 	@Id
-	@Column(name="user_cpf")
+	@Column(name = "user_cpf")
 	private String cpf;
-	@Column(name="user_name")
+	@Column(name = "user_name")
 	private String name;
-	@Column(name="user_username", unique=true)
+	@Column(name = "user_username", unique = true)
 	private String username;
-	@Column(name="user_password")
+	@Column(name = "user_password")
 	private String password;
-	@Column(name="user_role")
+	@Column(name = "user_role")
 	private String role;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<EmailEntity> emails;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(
-			name = "users_telephones",
-			joinColumns = @JoinColumn(name = "user_cpf"),
-			inverseJoinColumns = @JoinColumn(name = "telephone_id"))
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "users_telephones", joinColumns = @JoinColumn(name = "user_cpf"), inverseJoinColumns = @JoinColumn(name = "telephone_id"))
 	private Set<TelephoneEntity> telephones;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinColumn(name="adress_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinColumn(name = "adress_id")
 	private AdressEntity adress;
-	
-	
+
 	public UserEntity(String cpf, String name, String userName, String password, String role) {
 		super();
 		this.cpf = cpf;
@@ -56,11 +60,10 @@ public class UserEntity{
 		this.emails = new HashSet<>();
 		this.telephones = new HashSet<>();
 	}
-	
+
 	public UserEntity() {
 		this.emails = new HashSet<>();
 		this.telephones = new HashSet<>();
 	}
-	
-	
+
 }

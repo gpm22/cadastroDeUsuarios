@@ -1,4 +1,4 @@
-body {
+html body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,7 +10,23 @@ body {
   color: #ddd;
 }
 
-code {
+html body h1 {
+  font-size: 2em;
+}
+
+html body h2 {
+  font-size: 1.8em;
+}
+
+html body h3 {
+  font-size: 1.5em;
+}
+
+html body h4 {
+  font-size: 1.3em;
+}
+
+html code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
@@ -36,6 +52,7 @@ option {
   font-weight: bold;
   transition: 0.3s;
   box-sizing: border-box;
+  display: inline-block;
 }
 
 input[type="text"],
@@ -62,33 +79,34 @@ input[type="tel"]:hover {
   border-color: lime;
 }
 
-.error {
+html body .error {
   color: #f5473b;
   margin: 10px 0;
   display: block;
 }
 
-.sucess {
+html body .sucess {
   color: limegreen;
   margin: 10px 0;
   display: block;
 }
 
-input[type="button"], .submit-button {
+html body input[type="button"],
+html body .submit-button {
   transition: 0.3s;
   width: 160px;
   height: 30px;
-  margin: 0 25%;
+  margin: 0;
   background-color: #111;
   color: limegreen;
   border-radius: 15px;
   font-weight: bold;
 }
 
-input[type="button"]:hover,
-input[type="button"]:disabled,
-.submit-button:disabled,
-.submit-button:hover {
+html body input[type="button"]:hover,
+html body input[type="button"]:disabled,
+html body .submit-button:disabled,
+html body .submit-button:hover {
   background-color: #ddd;
   border-color: limegreen;
   border-width: 3px;
@@ -97,12 +115,13 @@ input[type="button"]:disabled,
   cursor: pointer;
 }
 
-input[type="button"]:disabled, .submit-button:disabled {
+html body input[type="button"]:disabled,
+html body .submit-button:disabled {
   cursor: default;
 }
 
-input[type="button"].button-delete,
-input[type="button"].button-add {  
+html body input[type="button"].button-delete,
+html body input[type="button"].button-add {
   font-size: 25px;
   font-weight: bold;
   text-align: center;
@@ -110,26 +129,27 @@ input[type="button"].button-add {
   margin: auto 0;
 }
 
-input[type="button"].button-delete {
-  height: 100px;
+html body input[type="button"].button-delete {
+  height: 60px;
+  width: 60px;
   background-color: #222;
   border-style: none;
   color: #f5473b;
   font-size: 40px;
 }
 
-input[type="button"].button-add:hover {
+html body input[type="button"].button-add:hover {
   background-color: lime;
   border-color: limegreen;
   color: darkgreen;
 }
 
-input[type="button"].button-delete:hover {
-  color:#fff;
+html body input[type="button"].button-delete:hover {
+  color: #fff;
   font-size: 44px;
 }
 
-input[type="button"].button-add {
+html body input[type="button"].button-add {
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -138,7 +158,7 @@ input[type="button"].button-add {
   color: #222;
 }
 
-.loader {
+.html body loader {
   border: 10px solid lime;
   border-top: 10px solid green;
   border-bottom: 10px solid green;
@@ -150,7 +170,18 @@ input[type="button"].button-add {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
+html body input[value="pesquisar CEP"] {
+  margin: 0 0 0 10px;
+}
+
+html body input[type="submit"] {
+  margin: 0 0 0 30px;
+}

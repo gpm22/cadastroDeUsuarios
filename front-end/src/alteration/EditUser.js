@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-
+import { Modal, Button } from "react-bootstrap";
 import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
 import PersonalDataForm from "../form/personal-data/PersonalDataForm";
@@ -11,49 +11,65 @@ import AccountAlteration from "./AccountAlteration";
 
 const EditUser = (props) => {
   const location = useLocation();
+  let navigate = useNavigate();
+
+  if (!location.state) {
+    navigate("/");
+    navigate("/login");
+  }
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  console.log(location.state);
+  const [show, setShow] = useState(false);
 
-  let user = location.state ? location.state.user : props.user;
-  let adm  = location.state.adm;
+  const handleClose = () => {
+    setShow(false);
+    navigate(-1);
+  };
+  const handleShow = () => setShow(true);
+
+  let user = location.state ? location.state.user : null;
+  let adm = location.state ? location.state.adm : null;
 
   const loged = user != null;
-  const role = adm.role === "administrator";
+  const role = (adm ? adm.role : "") === "administrator";
 
   const callBack = (setSt) => {
     return (st) => setSt(st);
   };
 
   let [personalData, setPersonalData] = useState({
-    name: user.name,
-    cpf: user.cpf,
-    emails: [...user.emails],
-    telephones: [...user.telephones],
+    name: user ? user.name : null,
+    cpf: user ? user.cpf : null,
+    emails: user ? [...user.emails] : null,
+    telephones: user ? [...user.telephones] : null,
   });
 
-  let [adress, setAdress] = useState({ ...user.adress });
+  let [adress, setAdress] = useState(user ? { ...user.adress } : null);
 
   let [userData, setUserData] = useState({
-    username: user.username,
+    username: user ? user.username : null,
   });
 
-  let [newUser, setNewUser] = useState({
-    ...personalData,
-    adress: { ...adress },
-    ...userData,
-    role: user.role,
-  });
+  let [newUser, setNewUser] = useState(
+    user
+      ? {
+          ...personalData,
+          adress: { ...adress },
+          ...userData,
+          role: user.role,
+        }
+      : null
+  );
 
   useEffect(() => {
     setNewUser({
       ...personalData,
       adress: { ...adress },
       ...userData,
-      role: user.role,
-      password: user.password,
+      role: user ? user.role : "ordinary",
+      password: user ? user.password : "",
     });
   }, [personalData, adress, userData]);
 
@@ -62,9 +78,8 @@ const EditUser = (props) => {
       const response = await updateUser(newUser);
       if (response.ok) {
         response.json().then((data) => {
-          alert("Usuário Editado com Sucesso!");
+          handleShow();
           setError(null);
-          navigate(-1);
         });
       } else {
         response.text().then((text) => {
@@ -85,9 +100,11 @@ const EditUser = (props) => {
     executeUpdateUser();
   };
 
+  //const myModal = new bootstrap.Modal(document.getElementById('modal-edit-user'), options)
+
   return (
     <>
-      <Header user={adm} loged={loged} />
+      <Header user={adm} loged={loged} location={"alteracao-de-usuario"} />
       <form className="form-block" onSubmit={handleUpdate}>
         {role && (
           <>
@@ -116,6 +133,18 @@ const EditUser = (props) => {
         )}
       </form>
       <Footer />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header className="bg-dark" closeButton>
+          <Modal.Title>
+            Usuário "{user.username}" Editado com Sucesso!
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Footer className="bg-dark">
+          <Button variant="success" onClick={handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

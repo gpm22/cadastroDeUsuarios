@@ -8,15 +8,15 @@ Sistema para cadastrar e recuperar dados de usuários, onde o cadastro é apenas
 
 ### Tecnologias
 
-O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serviço**), sendo que o **front** foi feito utilizando o **React**, enquanto que o **back** foi criado utilizando **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Maven e H2**.
+O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serviço**), sendo que o **front** foi feito utilizando o **React**, enquanto que o **back** foi criado utilizando **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Lombok, Maven e H2**.
 
 ## Exemplos
 
 ## Como utilizar
 
-Devidos as tecnologias utilizadas é necessário ter instalado tanto o **Maven** quanto o **NPM** para a execução desse sistema, além de fazer um clone ou baixar os arquivos do atual repositório.
+Devidos as tecnologias utilizadas é necessário ter instalado tanto o **Maven** quanto o **NPM** para a execução desse sistema, além de fazer um clone ou baixar os arquivos do atual repositório. Também pode ser necessário instalar o plugin do **Lombok**, acaso queira abrir o **back-end** em alguma IDE ou editor.
 
-Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utilizando o terminal, deve-se entrar na pasta **front-end** e executar os comandos **npm install**, para instalar as dependências necessárias, e **npm start**, para iniciar a aplicação React. Por sua vez, também utilizando o terminal, para iniciar o **back-end**, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** e executar o comando **mvn spring-boot:run**.
+Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utilizando o terminal, deve-se entrar na pasta **front-end** e executar os comandos **npm install**, para instalar as dependências necessárias, e **npm start**, para iniciar a aplicação React. Por sua vez, também utilizando o terminal, para iniciar o **back-end**, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** e executar os comandos **mvn install**, para instalar as dependências necessários, e **mvn spring-boot:run**, para iniciar a aplicação.
 
 O **cliente** estará disponível na url **http://localhost:3000/**, enquanto os end-points do **serviço** estão disponíveis na url **http://localhost:8080/**, assim como o cliente do banco de dados H2 que fica disponível na url **http://localhost:8080/h2-console**.
 

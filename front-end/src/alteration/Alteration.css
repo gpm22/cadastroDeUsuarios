@@ -29,15 +29,15 @@
 
 .alteration-table {
   display: block;
-  width: 95%;
-  margin-left: 2.5%;
+  width: 100%;
   box-sizing: border-box;
+  font-size: small;
   text-align: center;
   font-weight: bold;
 }
 .alteration-table th,
 .alteration-table td {
-  min-width: 100px;
+  min-width: 80px;
   border: 1px solid lime;
   background-color: #1b1b1b;
 }
@@ -70,4 +70,8 @@
     color: yellowgreen;
     background-color: #000;
     border-color: yellowgreen;
+}
+
+.alteration-block .error {
+  margin-left: 50px;
 }

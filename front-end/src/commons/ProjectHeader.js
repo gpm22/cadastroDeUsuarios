@@ -20,13 +20,13 @@ const Header = (props) => {
 
   let navbar = (
     <nav className="navbar-header">
-      <a href="/dados-do-usuario" onClick={goTo}>
+      <a href="/dados-do-usuario" className={props.location==="dados-do-usuario"? "active" : null} onClick={goTo}>
         Dados
       </a>
-      <a href="/cadastro-de-usuario" onClick={goTo}>
+      <a href="/cadastro-de-usuario" className={props.location==="cadastro-de-usuario"? "active" : null} onClick={goTo}>
         Cadastro
       </a>
-      <a href="/alteracao-de-usuario" onClick={goTo}>
+      <a href="/alteracao-de-usuario" className={props.location==="alteracao-de-usuario"? "active" : null} onClick={goTo}>
         Alteração
       </a>
       {button}

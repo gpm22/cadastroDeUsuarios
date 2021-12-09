@@ -46,6 +46,7 @@ function TelephoneForm(props) {
         <option value="residencial">Residencial</option>
         <option value="comercial">Comercial</option>
       </select>
+      <br/>
       {type.value === "celular" && (
         <>
           <p>

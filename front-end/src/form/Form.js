@@ -13,12 +13,13 @@ const Form = (props) => {
   const location = useLocation();
   let navigate = useNavigate();
 
-  if(!location.state){
+  if (!location.state) {
     navigate("/");
+    navigate("/login");
   }
 
   const [error, setError] = useState(null);
-  const [sucess, setSucess] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
   const [passwordEquals, setPasswordEquals] = useState(false);
 
@@ -74,7 +75,7 @@ const Form = (props) => {
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            setSucess("Novo Usuário Criado com Sucesso!");
+            setSuccess("Novo Usuário Criado com Sucesso!");
             setError(null);
           });
         } else {
@@ -107,7 +108,7 @@ const Form = (props) => {
 
   return (
     <>
-      <Header user={user} loged={loged} />
+      <Header user={user} loged={loged} location={"cadastro-de-usuario"}/>
       <form className="form-block"  onSubmit={handleCreate}>
         {role && (
           <>
@@ -123,12 +124,12 @@ const Form = (props) => {
                 <small className="error">{error}</small>
               </>
             )}
-            {sucess && (
+            {success && (
               <>
-                <small className="sucess">{sucess}</small>
+                <small className="sucess">{success}</small>
               </>
             )}
-            {!error && !sucess && (
+            {!error && !success && (
               <>
                 <br />
               </>

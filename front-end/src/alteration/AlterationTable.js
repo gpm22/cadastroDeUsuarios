@@ -3,7 +3,7 @@ import AlterationRow from "./AlterationRow";
 
 const AlterationTable = (props) => {
   const rows = props.users.map((user, index) => {
-    return <AlterationRow key={index} adm={props.adm} user={user} callBack={props.callBack}/>;
+    return <AlterationRow key={index} adm={props.adm} user={user} callBackSuccess ={props.callBackSuccess} callBackFail={props.callBackFail} />;
   });
 
   return (

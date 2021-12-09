@@ -16,7 +16,7 @@ function Login(props) {
   let navigate = useNavigate();
 
   async function login() {
-    return await  authenticateUser({
+    return await authenticateUser({
       username: username.value,
       password: password.value,
     })
@@ -63,26 +63,26 @@ function Login(props) {
         <br />
         <div>
           Nome de Usuário
-          <br />
           <input type="text" {...username} autoComplete="username" />
         </div>
-        <br />
         <div>
           Senha
-          <br />
           <input type="password" {...password} autoComplete="new-password" />
         </div>
-        {error && (
+        {error ? (
           <>
             <small className="error">{error}</small>
           </>
-        )}
-        {!error && (
+        ) : (
           <>
             <br />
           </>
         )}
-          <InputButton loading={loading} handleOnClick={handleLogin} value="Entrar" />
+        <InputButton
+          loading={loading}
+          handleOnClick={handleLogin}
+          value="Entrar"
+        />
       </div>
       <ProjectFooter />
     </div>

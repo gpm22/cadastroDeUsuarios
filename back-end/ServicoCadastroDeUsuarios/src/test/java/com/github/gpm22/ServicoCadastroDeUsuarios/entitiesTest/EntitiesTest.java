@@ -23,21 +23,21 @@ public class EntitiesTest {
 
 	@Autowired
 	private IUserRepository userRepository;
-	
+
 	@Autowired
 	private IUserService userService;
-	
-	@Test
+
+	// @Test
 	public void testarParser() {
 		log.info("iniciando testarParser");
 		String jsonString = "{\"cpf\":\"0\",\"name\":\"administrador\",\"username\":\"admin\",\"password\":\"123456\",\"role\":\"administrator\",\"emails\":[{\"id\":0,\"email\":\"askaoskoaks@aoskoaksa.com\"}],\"telephones\":[{\"id\":0,\"type\":\"fixo\",\"number\":\"32818210\"}],\"adress\":{\"id\":0,\"cep\":\"0000000\",\"publicPlace\":\"Rua 19 lote 08 casa 01\",\"district\":\"Nova Iguaçu\",\"city\":\"Rio Verde\",\"uf\":\"OM\", \"complement\":\"ao lado do posto de saúde\"}}";
-		
+
 		log.info("json parseado: " + userService.parser(new JSONObject(jsonString)));
 		log.info("finalizando testarParser");
-		
+
 	}
 
-	@Test
+	// @Test
 	public void userRepositoryTest() {
 		log.info("Iniciando userServiceTest");
 
@@ -69,12 +69,12 @@ public class EntitiesTest {
 
 		users.forEach((u) -> log.info("usuário: " + u));
 
-		log.info("update: "+ userRepository.update(new UserEntity("0", "Lorota", "caio1009", "123456", "ordinary")));
+		log.info("update: " + userRepository.update(new UserEntity("0", "Lorota", "caio1009", "123456", "ordinary")));
 
 		users = userRepository.findAll();
 
 		users.forEach((u) -> log.info("usuário: " + u));
-		
+
 		log.info("find: " + userRepository.findById("54").isPresent());
 
 		log.info("remove: " + userRepository.remove(userRepository.findById("0").get()));

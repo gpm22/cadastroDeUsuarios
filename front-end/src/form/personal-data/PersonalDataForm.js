@@ -20,6 +20,9 @@ const PersonalDataForm = (props) => {
         ]
   );
 
+  let [deleteEmails, setDeleteEmails] = useState(false);
+  let [deleteTelephones, setDeleteTelephones] = useState(false);
+
   const handleChange = (e) => {
     let emailsCopy = [...emails];
     emailsCopy[e.target.title] = e.target.value;
@@ -36,6 +39,7 @@ const PersonalDataForm = (props) => {
 
   const addEmail = () => {
     setEmails([...emails, ""]);
+    setDeleteEmails(true);
   };
 
   const addTelephone = () => {
@@ -46,18 +50,27 @@ const PersonalDataForm = (props) => {
         number: "",
       },
     ]);
+    setDeleteTelephones(true);
   };
 
   const removeEmail = (e) => {
     let emailsCopy = [...emails];
     emailsCopy.splice(e.target.title, 1);
     setEmails([...emailsCopy]);
+    
+    if(emailsCopy.length < 2){
+      setDeleteEmails(false);
+    }
   };
 
   const removeTelephone = (e) => {
     let telephonesCopy = [...telephones];
     telephonesCopy.splice(e.target.title, 1);
     setTelephones([...telephonesCopy]);
+
+    if(telephonesCopy.length < 2){
+      setDeleteTelephones(false);
+    }
   };
 
   let telephoneHtml = (value, index) => {
@@ -70,7 +83,15 @@ const PersonalDataForm = (props) => {
           className="button-delete"
           onClick={removeTelephone}
         />
-      ) : null;
+      ) : (deleteTelephones && (
+        <input
+          type="button"
+          value="x"
+          title={index}
+          className="button-delete"
+          onClick={removeTelephone}
+        />
+      ));
 
     return (
       <>
@@ -100,7 +121,17 @@ const PersonalDataForm = (props) => {
           className="button-delete"
           onClick={removeEmail}
         />
-      ) : null;
+      ) : (
+        deleteEmails && (
+          <input
+            type="button"
+            value="x"
+            title={index}
+            className="button-delete"
+            onClick={removeEmail}
+          />
+        )
+      );
 
     return (
       <>
@@ -110,7 +141,7 @@ const PersonalDataForm = (props) => {
         </span>
         <input
           key={index}
-          value={value.email? value.email : value}
+          value={value.email ? value.email : value}
           type="email"
           title={index}
           autoComplete="email"
@@ -131,7 +162,7 @@ const PersonalDataForm = (props) => {
       cpf: cpf.value.replaceAll(/[(. -]/gi, ""),
       telephones: telephones,
       emails: emails.map((value) => {
-        if(value.id > -1) {
+        if (value.id > -1) {
           return value;
         }
 
@@ -140,7 +171,16 @@ const PersonalDataForm = (props) => {
         };
       }),
     });
-  }, [name.value, cpf.value, emails, telephones]);
+
+    if(emails.length > 1 && !deleteEmails){
+      setDeleteEmails(true);
+    }
+
+    if(telephones.length> 1 && !deleteTelephones){
+      setDeleteTelephones(true);
+    }
+  }, [name.value, cpf.value, emails, telephones, deleteEmails]);
+
   return (
     <section className="personal-data-form-block">
       <h2>Dados Pessoais</h2>
@@ -148,7 +188,16 @@ const PersonalDataForm = (props) => {
         {" "}
         <b>Nome Completo:</b>
       </p>{" "}
-      <input type="text" tile="deve ser entre 3-100 caracteres alfanuméricos e espaço" {...name} autoComplete="name" required minLength="3" maxLength="100" pattern="[a-zA-Z0-9\s]+"/>
+      <input
+        type="text"
+        tile="deve ser entre 3-100 caracteres alfanuméricos e espaço"
+        {...name}
+        autoComplete="name"
+        required
+        minLength="3"
+        maxLength="100"
+        pattern="[a-zA-Z0-9\s]+"
+      />
       {!props.personalData && (
         <>
           <p>

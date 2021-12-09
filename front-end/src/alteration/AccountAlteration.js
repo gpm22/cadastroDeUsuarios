@@ -3,7 +3,6 @@ import { useFormInput } from "../commons/CommonFunctions";
 
 function AccountAlteration(props) {
   const username = useFormInput(props.userData.username);
-  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -24,17 +23,6 @@ function AccountAlteration(props) {
         className="input-account-data"
         required
       />
-      <br/>
-      {error && (
-        <>
-          <small className="error">{error}</small>
-        </>
-      )}
-      {!error && (
-        <>
-          <br />
-        </>
-      )}
     </div>
   );
 }

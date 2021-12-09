@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Header from "../commons/ProjectHeader";
 import Footer from "../commons/ProjectFooter";
-import { getAllUsers } from "../commons/CommonFunctions";
+import { getAllUsers} from "../commons/CommonFunctions";
 import AlterationTable from "./AlterationTable";
 import "./Alteration.css";
 
@@ -23,9 +23,13 @@ const Alteration = (props) => {
   const loged = user !== null;
   const role = (user ? user.role : "") === "administrator";
 
-  const callBack = () => {
+  const callBackSuccess = () => {
     window.location.reload(true);
   };
+
+  const callBackFail = (text) => {
+    setError(text);
+  }
 
   const execGetAllUsers = async () => {
     return await getAllUsers()
@@ -49,31 +53,33 @@ const Alteration = (props) => {
   };
 
   useEffect(() => {
-      execGetAllUsers();
+    execGetAllUsers();
   }, []);
 
   return (
-    <div className="alteration-block">
-      <Header user={user} loged={loged} />
-      {role && (
-        <>
-          {loading && (
-            <div className="alteration-loading-block">
-              <h1>Carregando lista de usuários</h1>
-              <div className="loader"></div>
-            </div>
-          )}
-          {!loading && (
-            <>
-              <h1>Alteração de Usuários</h1>
-              {error && <h1>{error}</h1>}
-              <AlterationTable users={users} adm={user} callBack={callBack} />
-            </>
-          )}
-        </>
-      )}
-      <Footer />
-    </div>
+    <>
+      <Header user={user} loged={loged} location={"alteracao-de-usuario"}/>
+      <div className="alteration-block">
+        {role && (
+          <>
+            {loading && (
+              <div className="alteration-loading-block">
+                <h1>Carregando lista de usuários</h1>
+                <div className="loader"></div>
+              </div>
+            )}
+            {!loading && (
+              <>
+                <h1>Alteração de Usuários</h1>
+                {error && <small className="error">{error}</small>}
+                <AlterationTable users={users} adm={user} callBackSuccess ={callBackSuccess} callBackFail={callBackFail} />
+              </>
+            )}
+          </>
+        )}
+        <Footer />
+      </div>
+    </>
   );
 };
 
