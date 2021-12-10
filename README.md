@@ -8,7 +8,7 @@ Sistema para cadastrar e recuperar dados de usuários, onde o cadastro é apenas
 
 ### Tecnologias
 
-O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serviço**), onde a comunicação entre essas partes é feita por meio de requisições HTTP. O **front** foi feito utilizando o **React**, enquanto que o **back** foi criado utilizando **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Lombok, Maven, H2 e bootstrap**.
+O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serviço**), onde a comunicação entre essas partes é feita por meio de requisições HTTP. O **front** foi feito utilizando o **React** e **bootstrap**, enquanto que o **back** foi criado utilizando **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Lombok, Maven e H2**.
 
 ## Como utilizar
 
@@ -43,21 +43,21 @@ No caso de usuários comuns, essa é a única tela disponível, então o header 
 
 ![header-comum](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/header-comum.png?raw=true)
 
-Para o usuário administrador ainda existem as telas de cadastrar novos usuários e a de modificar/deletar usuários, como pode ser visto na imagem da página de visualização de dados no seu header.
+Para o usuário administrador ainda existem as telas de cadastrar novos usuários e a de modificar/deletar usuários, como pode ser visto no header da página de visualização de dados mostrada anteriormente.
 
- A tela de cadastro é um formulário que possui máscara para os campos **CPF, telefones**, que varia entre celular, residencial e comercial, e **CEP**, sendo que a persistência no sistema é feita sem máscara e o  **CPF** é verificado antes da inserção:
+A tela de cadastro é um formulário que possui máscara para os campos **CPF, telefones**, que varia entre celular, residencial e comercial, e **CEP**, sendo que a persistência no sistema é feita sem máscara e o  **CPF** é verificado antes da inserção:
 
 ![cadastro-de-usuarios](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/cadastro-de-usuarios.png?raw=true)
 
- Todos os campos são obrigatórios, com exceção do **complemento do endereço**. O nome completo deve ser entre 3-100 caracteres alfanuméricos e/ou espaços. A verificação da validade do **email** é simples, aceitando qualquer coisa no formato: xxxx@xxxx.xxx.
+Todos os campos são obrigatórios, com exceção do **complemento do endereço**. O **nome completo** deve ser entre 3-100 caracteres alfanuméricos e/ou espaços. A verificação da validade do **email** é simples, aceitando qualquer entrada no formato: xxxx@xxxx.xxx.
 
  Ao se clicar no botão de **+** é possível adicionar novos **emails** ou **telefones**:
 
  ![emails](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/emails.png?raw=true)
 
-Enquanto que apertando no botão **x** se exclui um dos **emails** ou **telefones**, porém é necessário que pelo menos um **email** e um **telefone** seja preenchido.
+Enquanto que apertando no botão **x** se exclui um dos **emails** ou **telefones**, porém é necessário que pelo menos um **email** e um **telefone** sejam preenchidos.
 
-O sistema está configurado para buscar o **CEP** do o usuário através da [API ViaCEP](https://viacep.com.br/) e preencher o formulário com a informações buscadas, sendo que o usuário pode modificá-las.
+O sistema está configurado para buscar o **CEP** informado pelo usuário através da [API ViaCEP](https://viacep.com.br/) e preencher o formulário com a informações retornadas, sendo que o usuário pode modificá-las.
 
 | <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-antes.png?raw=true" alt="endereco-antes" style="zoom:100%;" /> | <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-depois.png?raw=true" style="zoom:100%;" /> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -137,5 +137,5 @@ INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('00000000000', 20)
 INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('11111111111', 30);
 ```
 
-
+Como pode se perceber pelo **data.sql**, as senhas são persisitidas no banco de dados após serem hasheadas usando o algoritmo **Bcrypt**.
 
