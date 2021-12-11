@@ -74,13 +74,4 @@ public class UserRepository implements IUserRepository {
 		return object;
 	}
 
-	@Override
-	@Transactional
-	public int removeFromUsersTelephones(TelephoneEntity telephone, UserEntity user) {
-		return entityManager
-				.createQuery("DELETE FROM users_telephones WHERE user_cpf = :userCpf AND telephone_id = :telephoneId")
-				.setParameter("userCpf", user.getClass()).setParameter("telephoneID", telephone.getId())
-				.executeUpdate();
-	}
-
 }
