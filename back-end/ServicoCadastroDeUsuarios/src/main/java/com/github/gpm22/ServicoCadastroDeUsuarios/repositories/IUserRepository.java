@@ -12,6 +12,4 @@ public interface IUserRepository extends IGenericRepository<UserEntity>{
 
 	public Optional<UserEntity> findByUserName(String userName);
 	
-	public int removeFromUsersTelephones(TelephoneEntity telephone, UserEntity user);
-	
 }
