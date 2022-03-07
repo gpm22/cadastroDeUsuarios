@@ -1,6 +1,7 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.controllers;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +58,13 @@ public class Controller {
 
 		try {
 
-			UserEntity user = userService.authenticateUser(response);
+			Optional<UserEntity> user = userService.authenticateUser(response);	
 
-			log.info("user: " + user);
-
-			if (user == null) {
+			if (user.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha Incorreta!");
 			}
+			
+			log.info("user: " + user.get());
 
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 

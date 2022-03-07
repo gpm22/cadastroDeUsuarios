@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.EmailEntity;
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IAdressService;
@@ -50,31 +49,7 @@ public class UserService implements IUserService {
 	@Override
 	public UserEntity insert(UserEntity user) throws DataIntegrityViolationException {
 		try {
-
-			List<AdressEntity> adresses = adressService.getAll();
-			int adressPosition = adresses.indexOf(user.getAdress());
-			if (adressPosition > -1) {
-				user.setAdress(adresses.get(adressPosition));
-			}
-
-			List<TelephoneEntity> telephonesAll = telephoneService.getAll();
-			Set<TelephoneEntity> telephonesUser = new HashSet<>(user.getTelephones());
-
-			int telCount = 1;
-
-			for (TelephoneEntity telephone : telephonesAll) {
-				if (telephonesUser.contains(telephone)) {
-					user.getTelephones().remove(telephone);
-					user.getTelephones().add(telephone);
-					telCount++;
-				}
-				if (telCount == telephonesUser.size()) {
-					break;
-				}
-			}
-
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-
 			return userRepository.insert(user);
 		} catch (DataIntegrityViolationException e) {
 			if (e.getMessage().contains("PUBLIC.USERS(USER_CPF)")) {
@@ -176,36 +151,26 @@ public class UserService implements IUserService {
 		AdressEntity adress = adressService.parser(json.getJSONObject("adress"));
 		user.setAdress(adress);
 		adress.getUsers().add(user);
-
-		json.getJSONArray("telephones").forEach((telephone) -> {
-
-			TelephoneEntity telephoneNew = telephoneService.parser((JSONObject) telephone);
-			telephoneNew.getUsers().add(user);
-			user.getTelephones().add(telephoneNew);
-		});
-
-		json.getJSONArray("emails").forEach((email) -> {
-			EmailEntity emailNew = emailService.parser((JSONObject) email);
-			emailNew.setUser(user);
-			user.getEmails().add(emailNew);
-		});
+		
+		user.getTelephones().addAll(telephoneService.parseAll(json.getJSONArray("telephones"), user));
+		user.getEmails().addAll(emailService.parseAll(json.getJSONArray("emails"), user));
 
 		return user;
 	}
 
 	@Override
-	public UserEntity authenticateUser(String response) {
+	public Optional<UserEntity> authenticateUser(String response) {
 		JSONObject json = new JSONObject(response);
 		return authenticateUser(json.getString("username"), json.getString("password"));
 	}
 
-	private UserEntity authenticateUser(String userName, String password) {
+	private Optional<UserEntity> authenticateUser(String userName, String password) {
 		Optional<UserEntity> user = userRepository.findByUserName(userName);
 		if (passwordEncoder.matches(password, user.get().getPassword())) {
-			return user.get();
+			return user;
 		}
 
-		return null;
+		return Optional.empty();
 	}
 
 }
