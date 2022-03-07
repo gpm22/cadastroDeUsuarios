@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 
 @Repository

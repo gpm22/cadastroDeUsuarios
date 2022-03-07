@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
+import com.github.gpm22.ServicoCadastroDeUsuarios.services.IParser;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IUserService;
 
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +32,9 @@ public class Controller {
 
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IParser parser;
 
 	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/{cpf}", produces = "application/json")
@@ -82,7 +86,7 @@ public class Controller {
 		try {
 			log.info(response);
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(userService.insert(userService.parser(new JSONObject(response))));
+					.body(userService.insert(parser.parseJsonToUser(new JSONObject(response))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -95,7 +99,7 @@ public class Controller {
 
 		try {
 
-			UserEntity userUpdate = userService.parser(new JSONObject(response));
+			UserEntity userUpdate = parser.parseJsonToUser(new JSONObject(response));
 
 			if (userUpdate == null) {
 				return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf));

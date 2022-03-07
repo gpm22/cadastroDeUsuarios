@@ -3,7 +3,6 @@ package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,38 +45,7 @@ public class AdressService implements IAdressService {
 		return adressRepository.findAll();
 	}
 
-	@Override
-	public AdressEntity parser(JSONObject json) {
-		AdressEntity adress = createAdressFromJson(json);
-		Optional<AdressEntity> existingAdress = existingAdress(adress);
-
-		if (existingAdress.isPresent()) {
-			return existingAdress.get();
-		}
-
-		return adress;
-	}
-
-	private AdressEntity createAdressFromJson(JSONObject json) {
-		AdressEntity adress = new AdressEntity();
-
-		adress.setCep(json.getString("cep"));
-		adress.setPublicPlace(json.getString("publicPlace"));
-		adress.setDistrict(json.getString("district"));
-		adress.setCity(json.getString("city"));
-		adress.setUf(json.getString("uf"));
-		adress.setComplement(json.getString("complement"));
-
-		try {
-			adress.setId(json.getLong("id"));
-		} catch (Exception e) {
-
-		}
-
-		return adress;
-	}
-
-	private Optional<AdressEntity> existingAdress(AdressEntity adress) {
+	public Optional<AdressEntity> existingAdress(AdressEntity adress) {
 		List<AdressEntity> adresses = getAll();
 		int adressPosition = adresses.indexOf(adress);
 

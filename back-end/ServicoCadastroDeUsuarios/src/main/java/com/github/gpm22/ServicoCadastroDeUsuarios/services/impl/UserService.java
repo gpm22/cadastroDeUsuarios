@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.EmailEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
@@ -136,26 +135,6 @@ public class UserService implements IUserService {
 			throw new DataIntegrityViolationException(
 					"O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
 		}
-	}
-
-	@Override
-	public UserEntity parser(JSONObject json) {
-		UserEntity user = new UserEntity();
-
-		user.setCpf(json.getString("cpf"));
-		user.setName(json.getString("name"));
-		user.setUsername(json.getString("username"));
-		user.setPassword(json.getString("password"));
-		user.setRole(json.getString("role"));
-
-		AdressEntity adress = adressService.parser(json.getJSONObject("adress"));
-		user.setAdress(adress);
-		adress.getUsers().add(user);
-		
-		user.getTelephones().addAll(telephoneService.parseAll(json.getJSONArray("telephones"), user));
-		user.getEmails().addAll(emailService.parseAll(json.getJSONArray("emails"), user));
-
-		return user;
 	}
 
 	@Override

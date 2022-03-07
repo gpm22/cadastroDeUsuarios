@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,7 +12,7 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.EmailEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
-import com.github.gpm22.ServicoCadastroDeUsuarios.services.IUserService;
+import com.github.gpm22.ServicoCadastroDeUsuarios.services.IParser;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -23,16 +22,16 @@ public class EntitiesTest {
 
 	@Autowired
 	private IUserRepository userRepository;
-
+	
 	@Autowired
-	private IUserService userService;
+	private IParser parser;
 
 	// @Test
 	public void testarParser() {
 		log.info("iniciando testarParser");
 		String jsonString = "{\"cpf\":\"0\",\"name\":\"administrador\",\"username\":\"admin\",\"password\":\"123456\",\"role\":\"administrator\",\"emails\":[{\"id\":0,\"email\":\"askaoskoaks@aoskoaksa.com\"}],\"telephones\":[{\"id\":0,\"type\":\"fixo\",\"number\":\"32818210\"}],\"adress\":{\"id\":0,\"cep\":\"0000000\",\"publicPlace\":\"Rua 19 lote 08 casa 01\",\"district\":\"Nova Iguaçu\",\"city\":\"Rio Verde\",\"uf\":\"OM\", \"complement\":\"ao lado do posto de saúde\"}}";
 
-		log.info("json parseado: " + userService.parser(new JSONObject(jsonString)));
+		log.info("json parseado: " + parser.parseJsonToUser(new JSONObject(jsonString)));
 		log.info("finalizando testarParser");
 
 	}
