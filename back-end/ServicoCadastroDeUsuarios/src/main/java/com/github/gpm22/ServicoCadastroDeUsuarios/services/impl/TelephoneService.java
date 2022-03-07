@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,39 @@ public class TelephoneService implements ITelephoneService {
 	@Override
 	public List<TelephoneEntity> getAll() {
 		return telephoneRepository.findAll();
+	}
+	
+	@Override
+	public Set<TelephoneEntity> parseAll(JSONArray jsons, UserEntity user) {
+		
+		Set<TelephoneEntity> telephones = new HashSet<>();
+		
+		jsons.forEach((json) -> {
+			TelephoneEntity telephoneNew = parser((JSONObject) json);
+			telephoneNew.getUsers().add(user);
+			telephones.add(telephoneNew);
+		});
+		
+		changeTelephonesForExistingTelephones(telephones);
+		
+		return telephones;
+	}
+	
+	private void changeTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
+		List<TelephoneEntity> allTelephones = getAll();
+
+		int telCount = 1;
+
+		for (TelephoneEntity telephone : allTelephones) {
+			if (telephones.contains(telephone)) {
+				telephones.remove(telephone);
+				telephones.add(telephone);
+			}
+			telCount++;
+			if (telCount == telephones.size()) {
+				break;
+			}
+		}
 	}
 
 	@Override
