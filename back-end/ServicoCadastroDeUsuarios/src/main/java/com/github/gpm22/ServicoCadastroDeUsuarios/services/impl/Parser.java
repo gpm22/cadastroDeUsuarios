@@ -29,9 +29,7 @@ public class Parser implements IParser {
 
 	@Override
 	public UserEntity parseJsonToUser(JSONObject json) {
-		UserEntity user = new UserEntity();
-
-		user.setPersonalInfo(json);
+		UserEntity user = new UserEntity(json);
 
 		AdressEntity adress = createAdressFromJson(json.getJSONObject("adress"));
 		user.setAdress(adress);

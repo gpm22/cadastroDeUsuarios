@@ -68,12 +68,14 @@ public class UserEntity {
 		this.telephones = new HashSet<>();
 	}
 	
-	public void setPersonalInfo(JSONObject json) {
-		this.setCpf(json.getString("cpf"));
-		this.setName(json.getString("name"));
-		this.setUsername(json.getString("username"));
-		this.setPassword(json.getString("password"));
-		this.setRole(json.getString("role"));
+	public UserEntity(JSONObject json) {
+		this.cpf = json.getString("cpf");
+		this.name = json.getString("name");
+		this.username = json.getString("username");
+		this.password =  json.getString("password");
+		this.role = json.getString("role");
+		this.emails = new HashSet<>();
+		this.telephones = new HashSet<>();
 	}
 
 }
