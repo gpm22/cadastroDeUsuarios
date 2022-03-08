@@ -1,7 +1,6 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,24 +31,20 @@ public class Parser implements IParser {
 	public UserEntity parseJsonToUser(JSONObject json) {
 		UserEntity user = new UserEntity();
 
-		user.setCpf(json.getString("cpf"));
-		user.setName(json.getString("name"));
-		user.setUsername(json.getString("username"));
-		user.setPassword(json.getString("password"));
-		user.setRole(json.getString("role"));
+		user.setPersonalInfo(json);
 
-		AdressEntity adress = parseJsonToAdress(json.getJSONObject("adress"));
+		AdressEntity adress = createAdressFromJson(json.getJSONObject("adress"));
 		user.setAdress(adress);
 		adress.getUsers().add(user);
 
-		user.getTelephones().addAll(parseJSONArrayToTelephones(json.getJSONArray("telephones"), user));
+		user.getTelephones().addAll(createTelephonesFromJSONArray(json.getJSONArray("telephones"), user));
 		user.getEmails().addAll(parseJSONArrayToEmails(json.getJSONArray("emails"), user));
 
 		return user;
 	}
 
-	private AdressEntity parseJsonToAdress(JSONObject json) {
-		AdressEntity adress = createAdressFromJson(json);
+	private AdressEntity createAdressFromJson(JSONObject json) {
+		AdressEntity adress = parseJsonToAdress(json);
 		Optional<AdressEntity> existingAdress = adressService.existingAdress(adress);
 
 		if (existingAdress.isPresent()) {
@@ -59,7 +54,7 @@ public class Parser implements IParser {
 		return adress;
 	}
 
-	private AdressEntity createAdressFromJson(JSONObject json) {
+	private AdressEntity parseJsonToAdress(JSONObject json) {
 		AdressEntity adress = new AdressEntity();
 
 		adress.setCep(json.getString("cep"));
@@ -78,7 +73,14 @@ public class Parser implements IParser {
 		return adress;
 	}
 
-	public Set<TelephoneEntity> parseJSONArrayToTelephones(JSONArray jsonArray, UserEntity user) {
+	private Set<TelephoneEntity> createTelephonesFromJSONArray(JSONArray jsonArray, UserEntity user) {
+		Set<TelephoneEntity> telephones = parseJSONArrayToTelephones(jsonArray, user);
+		telephoneService.changeTelephonesForExistingTelephones(telephones);
+
+		return telephones;
+	}
+	
+	private Set<TelephoneEntity> parseJSONArrayToTelephones(JSONArray jsonArray, UserEntity user) {
 		Set<TelephoneEntity> telephones = new HashSet<>();
 
 		jsonArray.forEach((json) -> {
@@ -86,8 +88,6 @@ public class Parser implements IParser {
 			telephoneNew.getUsers().add(user);
 			telephones.add(telephoneNew);
 		});
-
-		changeTelephonesForExistingTelephones(telephones);
 
 		return telephones;
 	}
@@ -103,23 +103,6 @@ public class Parser implements IParser {
 
 		}
 		return telephone;
-	}
-
-	private void changeTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
-		List<TelephoneEntity> allTelephones = telephoneService.getAll();
-
-		int telCount = 1;
-
-		for (TelephoneEntity telephone : allTelephones) {
-			if (telephones.contains(telephone)) {
-				telephones.remove(telephone);
-				telephones.add(telephone);
-			}
-			telCount++;
-			if (telCount == telephones.size()) {
-				break;
-			}
-		}
 	}
 
 	private Set<EmailEntity> parseJSONArrayToEmails(JSONArray jsonArray, UserEntity user) {

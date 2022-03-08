@@ -1,10 +1,10 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,22 +50,37 @@ public class TelephoneService implements ITelephoneService {
 
 	@Override
 	public int clean(UserEntity object) {
-		List<TelephoneEntity> telephonesAll = new ArrayList<>(getAll());
+		List<TelephoneEntity> telephonesAll = getAll();
 		Set<TelephoneEntity> telephonesUser = new HashSet<>(object.getTelephones());
-		
+
 		int telCount = 1;
-		
-		for(TelephoneEntity telephone: telephonesAll) {
-			if(telephonesUser.contains(telephone) && telephone.getUsers().size() == 0) {
+
+		for (TelephoneEntity telephone : telephonesAll) {
+			if (telephonesUser.contains(telephone) && telephone.getUsers().size() == 0) {
 				remove(telephone);
 				telCount++;
 			}
-			if(telCount == telephonesUser.size()) {
+			if (telCount == telephonesUser.size()) {
 				break;
 			}
 		}
-		
+
 		return telCount;
+	}
+
+	@Override
+	public void changeTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
+
+		Set<TelephoneEntity> telephonesWithoutId = telephones.stream().filter(telephone -> telephone.getId() == null)
+				.collect(Collectors.toSet());
+
+		List<TelephoneEntity> existingTelephones = telephoneRepository.findAllByList(telephonesWithoutId) ;
+
+		for (TelephoneEntity telephone : existingTelephones) {
+			telephones.remove(telephone);
+			telephones.add(telephone);
+		}
+
 	}
 
 }
