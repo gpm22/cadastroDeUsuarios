@@ -46,14 +46,7 @@ public class AdressService implements IAdressService {
 	}
 
 	public Optional<AdressEntity> existingAdress(AdressEntity adress) {
-		List<AdressEntity> adresses = getAll();
-		int adressPosition = adresses.indexOf(adress);
-
-		if (adressPosition > -1) {
-			return Optional.of(adresses.get(adressPosition));
-		} else {
-			return Optional.empty();
-		}
+		return adressRepository.findExistingAdress(adress);
 	}
 
 	@Override
