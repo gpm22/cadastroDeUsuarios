@@ -19,7 +19,7 @@ export const useFormInput = (initialValue) => {
 
 export const updateUser = (user) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/update-user/" + user.cpf,
+    "http://localhost:8080/cadastro-de-usuarios/v1/" + user.cpf,
     {
       method: "put",
       body: JSON.stringify(user),
@@ -32,7 +32,7 @@ export const updateUser = (user) => {
 
 export const getAllUsers = () => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/retornar-usuarios",
+    "http://localhost:8080/cadastro-de-usuarios/v1/",
     {
       method: "get",
       headers: {
@@ -44,7 +44,7 @@ export const getAllUsers = () => {
 
 export const deleteUser = (userCpf) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/delete-user/" + userCpf,
+    "http://localhost:8080/cadastro-de-usuarios/v1/" + userCpf,
     {
       method: "delete"
     }
@@ -53,7 +53,7 @@ export const deleteUser = (userCpf) => {
 
 export const createUser = (user) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/create-user/",
+    "http://localhost:8080/cadastro-de-usuarios/v1/",
     {
       method: "post",
       body: JSON.stringify(user),
@@ -67,7 +67,7 @@ export const createUser = (user) => {
 
 
 export const authenticateUser = (userInformations) => {
-  return fetch("http://localhost:8080/cadastro-de-usuarios/authenticate", {
+  return fetch("http://localhost:8080/cadastro-de-usuarios/v1/authenticate", {
     method: "post",
     body: JSON.stringify(userInformations),
     headers: {
