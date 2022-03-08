@@ -72,6 +72,7 @@ public class AdressEntity{
 		this.city = json.getString("city");
 		this.uf = json.getString("uf");
 		this.complement = json.getString("complement");
+		this.users = new HashSet<>();
 
 		try {
 			this.id = json.getLong("id");
