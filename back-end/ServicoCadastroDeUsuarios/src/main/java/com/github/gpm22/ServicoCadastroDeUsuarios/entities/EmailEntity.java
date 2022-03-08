@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -42,5 +44,16 @@ public class EmailEntity{
 	}
 	
 	public EmailEntity() {}
+	
+	public EmailEntity (JSONObject json) {
+
+		this.email = json.getString("email");
+
+		try {
+			this.id =  json.getLong("id");
+		} catch (Exception e) {
+
+		}
+	}
 	
 }

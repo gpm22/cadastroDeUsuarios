@@ -88,25 +88,12 @@ public class Parser implements IParser {
 		Set<EmailEntity> emails = new HashSet<>();
 
 		jsonArray.forEach((json) -> {
-			EmailEntity email = parserJsonToEmail((JSONObject) json);
+			EmailEntity email = new EmailEntity((JSONObject) json);
 			email.setUser(user);
 			user.getEmails().add(email);
 		});
 
 		return emails;
-	}
-
-	private EmailEntity parserJsonToEmail(JSONObject json) {
-
-		EmailEntity email = new EmailEntity(json.getString("email"));
-
-		try {
-			email.setId(json.getLong("id"));
-		} catch (Exception e) {
-
-		}
-
-		return email;
 	}
 
 }
