@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -65,13 +66,17 @@ public class AdressRepository implements IAdressRepository {
 	@Override
 	public Optional<AdressEntity> findExistingAdress(AdressEntity adress) {
 
-		String sql = "Select t from AdressEntity t " + "where t.cep = :cep " + "and t.publicPlace = :publicPlace "
-				+ "and t.district = :district " + "and t.city=:city " + "and t.uf = :uf "
-				+ "and t.complement = :complement";
-		return Optional.ofNullable((AdressEntity) entityManager.createQuery(sql).setParameter("cep", adress.getCep())
-				.setParameter("publicPlace", adress.getPublicPlace()).setParameter("district", adress.getDistrict())
-				.setParameter("city", adress.getCity()).setParameter("uf", adress.getUf())
-				.setParameter("complement", adress.getComplement()).getSingleResult());
+		try {
+			String sql = "Select t from AdressEntity t " + "where t.cep = :cep " + "and t.publicPlace = :publicPlace "
+					+ "and t.district = :district " + "and t.city=:city " + "and t.uf = :uf "
+					+ "and t.complement = :complement";
+			return Optional.of((AdressEntity) entityManager.createQuery(sql).setParameter("cep", adress.getCep())
+					.setParameter("publicPlace", adress.getPublicPlace()).setParameter("district", adress.getDistrict())
+					.setParameter("city", adress.getCity()).setParameter("uf", adress.getUf())
+					.setParameter("complement", adress.getComplement()).getSingleResult());
+		} catch (NoResultException e) {
+			return Optional.empty();
+		}
 	}
 
 }

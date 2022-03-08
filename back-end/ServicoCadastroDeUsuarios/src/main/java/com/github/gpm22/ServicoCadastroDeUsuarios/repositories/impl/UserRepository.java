@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -44,9 +45,13 @@ public class UserRepository implements IUserRepository {
 
 	@Override
 	public Optional<UserEntity> findByUserName(String username) {
-		return Optional.ofNullable(
-				(UserEntity) entityManager.createQuery("Select t from UserEntity t where t.username = :username")
-						.setParameter("username", username).getSingleResult());
+		try {
+			return Optional.ofNullable(
+					(UserEntity) entityManager.createQuery("Select t from UserEntity t where t.username = :username")
+							.setParameter("username", username).getSingleResult());
+		} catch (NoResultException e) {
+			return Optional.empty();
+		}
 	}
 
 	@Override
