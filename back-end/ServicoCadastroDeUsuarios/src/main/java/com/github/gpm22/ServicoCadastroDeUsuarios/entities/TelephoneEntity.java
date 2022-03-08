@@ -31,7 +31,7 @@ public class TelephoneEntity{
 	private Long id;
 	@Column(name="telephone_type")
 	private String type;
-	@Column(name="telephone_number")
+	@Column(name="telephone_number", unique=true)
 	private String number;
 	@JsonIgnore
 	@ToString.Exclude
