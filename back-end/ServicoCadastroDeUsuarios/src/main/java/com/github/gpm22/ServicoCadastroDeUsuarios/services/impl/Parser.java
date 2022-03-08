@@ -63,25 +63,12 @@ public class Parser implements IParser {
 		Set<TelephoneEntity> telephones = new HashSet<>();
 
 		jsonArray.forEach((json) -> {
-			TelephoneEntity telephoneNew = parseJsonToTelephone((JSONObject) json);
+			TelephoneEntity telephoneNew = new TelephoneEntity((JSONObject) json);
 			telephoneNew.getUsers().add(user);
 			telephones.add(telephoneNew);
 		});
 
 		return telephones;
-	}
-
-	private TelephoneEntity parseJsonToTelephone(JSONObject json) {
-		TelephoneEntity telephone = new TelephoneEntity();
-		telephone.setType(json.getString("type"));
-		telephone.setNumber(json.getString("number"));
-
-		try {
-			telephone.setId(json.getLong("id"));
-		} catch (Exception e) {
-
-		}
-		return telephone;
 	}
 
 	private Set<EmailEntity> parseJSONArrayToEmails(JSONArray jsonArray, UserEntity user) {
