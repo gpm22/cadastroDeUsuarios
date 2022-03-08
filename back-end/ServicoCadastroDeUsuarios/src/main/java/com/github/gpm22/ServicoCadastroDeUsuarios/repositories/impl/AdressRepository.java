@@ -37,11 +37,11 @@ public class AdressRepository implements IAdressRepository {
 	public AdressEntity remove(AdressEntity object) {
 
 		if (entityManager.contains(object)) {
-	        entityManager.remove(object);
-	    } else {
-	    	AdressEntity ee = entityManager.getReference(object.getClass(), object.getId());
-	        entityManager.remove(ee);
-	    }
+			entityManager.remove(object);
+		} else {
+			AdressEntity ee = entityManager.getReference(object.getClass(), object.getId());
+			entityManager.remove(ee);
+		}
 		entityManager.flush();
 		entityManager.clear();
 		return object;
@@ -60,6 +60,18 @@ public class AdressRepository implements IAdressRepository {
 	@SuppressWarnings("unchecked")
 	public List<AdressEntity> findAll() {
 		return entityManager.createQuery("Select t from AdressEntity t").getResultList();
+	}
+
+	@Override
+	public Optional<AdressEntity> findExistingAdress(AdressEntity adress) {
+
+		String sql = "Select t from AdressEntity t " + "where t.cep = :cep " + "and t.publicPlace = :publicPlace "
+				+ "and t.district = :district " + "and t.city=:city " + "and t.uf = :uf "
+				+ "and t.complement = :complement";
+		return Optional.ofNullable((AdressEntity) entityManager.createQuery(sql).setParameter("cep", adress.getCep())
+				.setParameter("publicPlace", adress.getPublicPlace()).setParameter("district", adress.getDistrict())
+				.setParameter("city", adress.getCity()).setParameter("uf", adress.getUf())
+				.setParameter("complement", adress.getComplement()).getSingleResult());
 	}
 
 }
