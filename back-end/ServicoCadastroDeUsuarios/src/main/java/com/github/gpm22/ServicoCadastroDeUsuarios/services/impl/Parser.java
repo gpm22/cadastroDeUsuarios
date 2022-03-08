@@ -42,30 +42,11 @@ public class Parser implements IParser {
 	}
 
 	private AdressEntity createAdressFromJson(JSONObject json) {
-		AdressEntity adress = parseJsonToAdress(json);
+		AdressEntity adress = new AdressEntity(json);
 		Optional<AdressEntity> existingAdress = adressService.existingAdress(adress);
 
 		if (existingAdress.isPresent()) {
 			return existingAdress.get();
-		}
-
-		return adress;
-	}
-
-	private AdressEntity parseJsonToAdress(JSONObject json) {
-		AdressEntity adress = new AdressEntity();
-
-		adress.setCep(json.getString("cep"));
-		adress.setPublicPlace(json.getString("publicPlace"));
-		adress.setDistrict(json.getString("district"));
-		adress.setCity(json.getString("city"));
-		adress.setUf(json.getString("uf"));
-		adress.setComplement(json.getString("complement"));
-
-		try {
-			adress.setId(json.getLong("id"));
-		} catch (Exception e) {
-
 		}
 
 		return adress;

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -62,5 +64,20 @@ public class AdressEntity{
 		this.users = new HashSet<>();
 	}
 	
+	public AdressEntity(JSONObject json) {
+
+		this.cep = json.getString("cep");
+		this.publicPlace = json.getString("publicPlace");
+		this.district = json.getString("district");
+		this.city = json.getString("city");
+		this.uf = json.getString("uf");
+		this.complement = json.getString("complement");
+
+		try {
+			this.id = json.getLong("id");
+		} catch (Exception e) {
+
+		}
+	}
 	
 }
