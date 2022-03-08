@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -64,6 +66,14 @@ public class UserEntity {
 	public UserEntity() {
 		this.emails = new HashSet<>();
 		this.telephones = new HashSet<>();
+	}
+	
+	public void setPersonalInfo(JSONObject json) {
+		this.setCpf(json.getString("cpf"));
+		this.setName(json.getString("name"));
+		this.setUsername(json.getString("username"));
+		this.setPassword(json.getString("password"));
+		this.setRole(json.getString("role"));
 	}
 
 }
