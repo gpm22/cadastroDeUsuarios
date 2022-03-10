@@ -42,10 +42,10 @@ public class Controller {
 	}
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> createUser(@RequestBody String response) {
+	public ResponseEntity<?> createUser(@RequestBody String requestJSON) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(userService.insert(parser.parseJsonToUser(new JSONObject(response))));
+					.body(userService.insert(parser.parseJsonToUser(new JSONObject(requestJSON))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -53,10 +53,10 @@ public class Controller {
 	}
 
 	@PostMapping(value = "/authenticate", produces = "application/json")
-	public ResponseEntity<?> authenticateUser(@RequestBody String response) {
+	public ResponseEntity<?> authenticateUser(@RequestBody String requestJSON) {
 
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.getAuthenticatedUser(new JSONObject(response)));
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getAuthenticatedUser(new JSONObject(requestJSON)));
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		} catch (Exception e) {
@@ -75,17 +75,17 @@ public class Controller {
 	}
 
 	@PutMapping(value = "/{cpf}", consumes = "application/json")
-	public ResponseEntity<?> updateUser(@RequestBody String response, @PathVariable String cpf) {
+	public ResponseEntity<?> updateUser(@RequestBody String requestJSON, @PathVariable String cpf) {
 
 		try {
 
-			UserEntity userUpdate = parser.parseJsonToUser(new JSONObject(response));
+			UserEntity userUpdated = parser.parseJsonToUser(new JSONObject(requestJSON));
 
-			if (userUpdate == null) {
+			if (userUpdated == null) {
 				return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf));
 			}
 
-			return ResponseEntity.status(HttpStatus.OK).body(userService.update(userUpdate));
+			return ResponseEntity.status(HttpStatus.OK).body(userService.update(userUpdated));
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário Inexistente!");
 		} catch (Exception e) {
