@@ -49,23 +49,19 @@ public class TelephoneService implements ITelephoneService {
 	}
 
 	@Override
-	public int clean(UserEntity object) {
-		List<TelephoneEntity> telephonesAll = getAll();
+	public int removeOrhans(UserEntity object) {
 		Set<TelephoneEntity> telephonesUser = new HashSet<>(object.getTelephones());
 
-		int telCount = 1;
+		int removedTelephones = 1;
 
-		for (TelephoneEntity telephone : telephonesAll) {
-			if (telephonesUser.contains(telephone) && telephone.getUsers().size() == 0) {
+		for (TelephoneEntity telephone : telephonesUser) {
+			if (telephone.getUsers().size() == 0) {
 				remove(telephone);
-				telCount++;
-			}
-			if (telCount == telephonesUser.size()) {
-				break;
+				removedTelephones++;
 			}
 		}
 
-		return telCount;
+		return removedTelephones;
 	}
 
 	@Override

@@ -50,13 +50,9 @@ public class AdressService implements IAdressService {
 	}
 
 	@Override
-	public boolean clean(UserEntity object) {
-
+	public void removeIfOrphan(UserEntity object) {
 		if (object.getAdress().getUsers().size() == 0) {
 			remove(object.getAdress());
-			return true;
 		}
-
-		return false;
 	}
 }

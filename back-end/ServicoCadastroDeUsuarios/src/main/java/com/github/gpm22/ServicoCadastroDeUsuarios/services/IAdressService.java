@@ -7,7 +7,7 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 
 public interface IAdressService extends IGenericService<AdressEntity> {
 
-	public boolean clean(UserEntity object);
+	public void removeIfOrphan(UserEntity object);
 	Optional<AdressEntity> existingAdress(AdressEntity adress); 
 
 }
