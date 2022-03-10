@@ -138,18 +138,26 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Optional<UserEntity> authenticateUser(String response) {
-		JSONObject json = new JSONObject(response);
-		return authenticateUser(json.getString("username"), json.getString("password"));
+	public UserEntity getAuthenticatedUser(JSONObject json) {
+		UserEntity user = getUserByUserName(json.getString("username"));
+		authenticateUser(user.getPassword(), json.getString("password"));
+		return user;
 	}
 
-	private Optional<UserEntity> authenticateUser(String userName, String password) {
-		Optional<UserEntity> user = userRepository.findByUserName(userName);
-		if (passwordEncoder.matches(password, user.get().getPassword())) {
-			return user;
+	private void authenticateUser(String actualPassword, String receivedPassword) {
+		if (!passwordEncoder.matches(receivedPassword, actualPassword)) {
+			throw new IllegalArgumentException("Senha incorreta!");
 		}
+	}
 
-		return Optional.empty();
+	private UserEntity getUserByUserName(String userName) {
+		Optional<UserEntity> user = userRepository.findByUserName(userName);
+
+		if (user.isEmpty()) {
+			throw new IllegalArgumentException("O usuário " + userName + " não existe!");
+		}
+		
+		return user.get();
 	}
 
 }

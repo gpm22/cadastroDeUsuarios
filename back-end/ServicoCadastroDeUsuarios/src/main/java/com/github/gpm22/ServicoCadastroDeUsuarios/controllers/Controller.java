@@ -1,11 +1,9 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.controllers;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +28,7 @@ public class Controller {
 
 	@Autowired
 	IUserService userService;
-	
+
 	@Autowired
 	IParser parser;
 
@@ -42,11 +40,10 @@ public class Controller {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> createUser(@RequestBody String response) {
 		try {
-			log.info(response);
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(userService.insert(parser.parseJsonToUser(new JSONObject(response))));
 		} catch (Exception e) {
@@ -59,19 +56,9 @@ public class Controller {
 	public ResponseEntity<?> authenticateUser(@RequestBody String response) {
 
 		try {
-
-			Optional<UserEntity> user = userService.authenticateUser(response);	
-
-			if (user.isEmpty()) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha Incorreta!");
-			}
-			
-			log.info("user: " + user.get());
-
-			return ResponseEntity.status(HttpStatus.OK).body(user);
-
-		} catch (EmptyResultDataAccessException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário Inexistente!");
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getAuthenticatedUser(new JSONObject(response)));
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpStatus.INTERNAL_SERVER_ERROR);
