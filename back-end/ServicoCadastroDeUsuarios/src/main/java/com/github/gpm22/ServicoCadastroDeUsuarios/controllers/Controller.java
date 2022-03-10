@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IParser;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IUserService;
 
@@ -56,7 +55,8 @@ public class Controller {
 	public ResponseEntity<?> authenticateUser(@RequestBody String requestJSON) {
 
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.getAuthenticatedUser(new JSONObject(requestJSON)));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(userService.getAuthenticatedUser(new JSONObject(requestJSON)));
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		} catch (Exception e) {
@@ -68,24 +68,18 @@ public class Controller {
 	@GetMapping(value = "/{cpf}", produces = "application/json")
 	public ResponseEntity<?> getUser(@PathVariable String cpf) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf).get());
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByCpf(cpf));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 
-	@PutMapping(value = "/{cpf}", consumes = "application/json")
-	public ResponseEntity<?> updateUser(@RequestBody String requestJSON, @PathVariable String cpf) {
+	@PutMapping(consumes = "application/json")
+	public ResponseEntity<?> updateUser(@RequestBody String requestJSON) {
 
 		try {
-
-			UserEntity userUpdated = parser.parseJsonToUser(new JSONObject(requestJSON));
-
-			if (userUpdated == null) {
-				return ResponseEntity.status(HttpStatus.OK).body(userService.getById(cpf));
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).body(userService.update(userUpdated));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(userService.update(parser.parseJsonToUser(new JSONObject(requestJSON))));
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário Inexistente!");
 		} catch (Exception e) {
@@ -98,7 +92,7 @@ public class Controller {
 	public ResponseEntity<?> deleteUser(@PathVariable String cpf) {
 
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(userService.remove(userService.getById(cpf).get()));
+			return ResponseEntity.status(HttpStatus.OK).body(userService.remove(userService.getUserByCpf(cpf)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
