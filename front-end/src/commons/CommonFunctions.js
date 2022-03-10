@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const BASE_URL = "http://localhost:8080/cadastro-de-usuarios/v1/";
+
 export const useFormInput = (initialValue) => {
   const [value, setValue1] = useState(initialValue);
 
@@ -19,7 +21,7 @@ export const useFormInput = (initialValue) => {
 
 export const updateUser = (user) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/v1/" + user.cpf,
+     BASE_URL,
     {
       method: "put",
       body: JSON.stringify(user),
@@ -32,7 +34,7 @@ export const updateUser = (user) => {
 
 export const getAllUsers = () => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/v1/",
+     BASE_URL,
     {
       method: "get",
       headers: {
@@ -44,7 +46,7 @@ export const getAllUsers = () => {
 
 export const deleteUser = (userCpf) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/v1/" + userCpf,
+     BASE_URL + userCpf,
     {
       method: "delete"
     }
@@ -53,7 +55,7 @@ export const deleteUser = (userCpf) => {
 
 export const createUser = (user) => {
   return fetch(
-    "http://localhost:8080/cadastro-de-usuarios/v1/",
+     BASE_URL,
     {
       method: "post",
       body: JSON.stringify(user),
@@ -67,7 +69,7 @@ export const createUser = (user) => {
 
 
 export const authenticateUser = (userInformations) => {
-  return fetch("http://localhost:8080/cadastro-de-usuarios/v1/authenticate", {
+  return fetch(BASE_URL + "authenticate", {
     method: "post",
     body: JSON.stringify(userInformations),
     headers: {
