@@ -11,7 +11,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.EmailEntity;
+import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IAdressService;
@@ -40,6 +42,10 @@ public class UserService implements IUserService {
 	@Autowired
 	private IEmailService emailService;
 
+	private Set<TelephoneEntity> excludedTelephones = new HashSet<>();
+
+	private AdressEntity excludedAdress;
+
 	@Override
 	public List<UserEntity> getAll() {
 		return userRepository.findAll();
@@ -62,27 +68,115 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserEntity remove(UserEntity object) {
-		object.getAdress().getUsers().remove(object);
-		object.getTelephones().forEach((telephone) -> telephone.getUsers().remove(object));
-		userRepository.remove(object);
-		adressService.removeIfOrphan(object);
-		telephoneService.removeOrhans(object);
-		return object;
+	public UserEntity remove(UserEntity user) {
+
+		removeUserFromAdress(user);
+		removeUserFromTelephones(user);
+		removeUser(user);
+		removeOrphansFromExcludedTelephones();
+		removeExcludedAdressIfOrphan();
+
+		return user;
+	}
+
+	private void removeUserFromAdress(UserEntity user) {
+		removeUserFromAdress(user, user.getAdress());
+	}
+
+	private void removeUserFromAdress(UserEntity user, AdressEntity adress) {
+		excludedAdress = adress;
+		adress.getUsers().remove(user);
+	}
+
+	private void removeUserFromTelephones(UserEntity user) {
+		removeUserFromTelephones(user, user.getTelephones());
+	}
+
+	private void removeUserFromTelephones(UserEntity user, Set<TelephoneEntity> telephones) {
+		telephones.forEach((telephone) -> {
+			telephone.getUsers().remove(user);
+		});
+		excludedTelephones.addAll(telephones);
+	}
+
+	private void removeUser(UserEntity user) {
+		user.setTelephones(null);
+		user.setAdress(null);
+		userRepository.update(user);
+		userRepository.remove(user);
+	}
+
+	private void removeExcludedAdressIfOrphan() {
+		if (excludedAdress != null) {
+			adressService.removeIfOrphan(excludedAdress);
+			excludedAdress = null;
+		}
+	}
+
+	private void removeOrphansFromExcludedTelephones() {
+		if (excludedTelephones.size() > 0) {
+			telephoneService.removeOrhans(excludedTelephones);
+			excludedTelephones = new HashSet<>();
+		}
 	}
 
 	@Override
-	public UserEntity insert(UserEntity user) throws DataIntegrityViolationException {
+	public UserEntity update(UserEntity user) throws DataIntegrityViolationException {
 		try {
-			encodePassword(user);
-			return userRepository.insert(user);
+			UserEntity originalUser = userRepository.findById(user.getCpf()).get();
+
+			if (user.fullyEquals(originalUser)) {
+				return user;
+			}
+
+			applyChanges(user, originalUser);
+
+			UserEntity updatedUser = updateAndReturnUpdatedUser(user);
+
+			removeOrphansFromExcludedTelephones();
+			removeExcludedAdressIfOrphan();
+
+			return updatedUser;
 		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
 			throw insertOrUpdateErro(e, user);
 		}
 	}
 	
-	private void encodePassword(UserEntity user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	private void applyChanges(UserEntity user, UserEntity originalUser) {
+		if (passwordChanged(user, originalUser)) {
+			encodePassword(user);
+		}
+
+		if (adressChanged(user, originalUser)) {
+			removeUserFromAdress(originalUser);
+		}
+
+		if (telephonesChanged(user, originalUser)) {
+			removeUserFromTelephones(originalUser, getRemovedTelephonesAfterUpdate(user, originalUser));
+		}
+	}
+
+	private boolean passwordChanged(UserEntity user, UserEntity originalUser) {
+		return !user.getPassword().equals(originalUser.getPassword());
+	}
+
+	private boolean adressChanged(UserEntity user, UserEntity originalUser) {
+		return !user.getAdress().equals(originalUser.getAdress());
+	}
+
+	private boolean telephonesChanged(UserEntity user, UserEntity originalUser) {
+		return !user.getTelephones().equals(originalUser.getTelephones());
+	}
+
+	private Set<TelephoneEntity> getRemovedTelephonesAfterUpdate(UserEntity user, UserEntity originalUser) {
+		Set<TelephoneEntity> removedTelephones = new HashSet<>(originalUser.getTelephones());
+		removedTelephones.removeAll(user.getTelephones());
+		return removedTelephones;
+	}
+	
+	private UserEntity updateAndReturnUpdatedUser(UserEntity user) {
+		return userRepository.update(user);
 	}
 
 	private DataIntegrityViolationException insertOrUpdateErro(DataIntegrityViolationException e, UserEntity user)
@@ -103,53 +197,27 @@ public class UserService implements IUserService {
 			}
 
 		}
-		
+
 		if (e.getMessage().contains("PUBLIC.USERS(USER_USERNAME)")) {
-			return new DataIntegrityViolationException("O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
+			return new DataIntegrityViolationException(
+					"O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
 		}
 
 		return e;
 	}
 
 	@Override
-	public UserEntity update(UserEntity user) throws DataIntegrityViolationException {
+	public UserEntity insert(UserEntity user) throws DataIntegrityViolationException {
 		try {
-
-			UserEntity originalUser = userRepository.findById(user.getCpf()).get();
-
-			if (user.fullyEquals(originalUser)) {
-				return user;
-			}
-			
-			if(passwordChanged(user, originalUser)) {
-				encodePassword(user);
-			}
-
-			removeOrfhanEmails(user, originalUser);
-
-			return userRepository.update(user);
+			encodePassword(user);
+			return userRepository.insert(user);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
 			throw insertOrUpdateErro(e, user);
 		}
 	}
 
-	private boolean passwordChanged(UserEntity user, UserEntity originalUser) {
-		return !user.getPassword().equals(originalUser.getPassword());
-	}
-
-	private void removeOrfhanEmails(UserEntity user, UserEntity originalUser) {
-		if (!user.getEmails().equals(originalUser.getEmails())) {
-
-			Set<EmailEntity> emailsExcluded = new HashSet<>(originalUser.getEmails());
-
-			emailsExcluded.removeAll(user.getEmails());
-
-			emailsExcluded.forEach((email) -> {
-				emailService.remove(email);
-			});
-			originalUser.setEmails(user.getEmails());
-		}
+	private void encodePassword(UserEntity user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 	}
 
 	@Override
