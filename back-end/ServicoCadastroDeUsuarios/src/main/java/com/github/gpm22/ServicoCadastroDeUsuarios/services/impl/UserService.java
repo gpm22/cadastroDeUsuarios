@@ -72,6 +72,17 @@ public class UserService implements IUserService {
 					"O nome de usuário \"" + user.getUsername() + "\" já foi utilizado");
 		}
 	}
+	
+	@Override
+	public UserEntity getUserByCpf(String cpf) {
+		Optional<UserEntity> user = userRepository.findById((String) cpf);
+
+		if (user.isEmpty()) {
+			throw new IllegalArgumentException("O usuário com CPF " + cpf + " não existe!");
+		}
+		
+		return user.get();
+	}
 
 	@Override
 	public Optional<UserEntity> getById(Object cpf) {

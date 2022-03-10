@@ -6,5 +6,7 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 
 public interface IUserService extends IGenericService<UserEntity>{
 
-	UserEntity getAuthenticatedUser(JSONObject json);	
+	UserEntity getAuthenticatedUser(JSONObject json);
+
+	UserEntity getUserByCpf(String cpf);	
 }
