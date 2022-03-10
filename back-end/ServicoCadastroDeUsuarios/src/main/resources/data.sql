@@ -15,3 +15,8 @@ INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('00000000000', 0);
 INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('11111111111', 10);
 INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('00000000000', 20);
 INSERT INTO users_telephones (user_cpf, telephone_id) VALUES ('11111111111', 30);
+
+INSERT INTO telephones_users (telephone_entity_telephone_id, users_user_cpf) VALUES (0, '00000000000');
+INSERT INTO telephones_users (telephone_entity_telephone_id, users_user_cpf) VALUES (10, '11111111111');
+INSERT INTO telephones_users (telephone_entity_telephone_id, users_user_cpf) VALUES (20, '00000000000');
+INSERT INTO telephones_users (telephone_entity_telephone_id, users_user_cpf) VALUES (30, '11111111111');
