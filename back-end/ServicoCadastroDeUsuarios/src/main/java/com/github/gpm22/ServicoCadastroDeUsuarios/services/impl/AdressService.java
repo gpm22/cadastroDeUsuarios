@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IAdressRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IAdressService;
 
@@ -50,9 +49,9 @@ public class AdressService implements IAdressService {
 	}
 
 	@Override
-	public void removeIfOrphan(UserEntity object) {
-		if (object.getAdress().getUsers().size() == 0) {
-			remove(object.getAdress());
+	public void removeIfOrphan(AdressEntity object) {
+		if (object.getUsers().size() == 0) {
+			remove(object);
 		}
 	}
 }

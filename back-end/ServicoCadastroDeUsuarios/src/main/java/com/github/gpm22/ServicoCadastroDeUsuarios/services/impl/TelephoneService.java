@@ -49,12 +49,12 @@ public class TelephoneService implements ITelephoneService {
 	}
 
 	@Override
-	public int removeOrhans(UserEntity object) {
-		Set<TelephoneEntity> telephonesUser = new HashSet<>(object.getTelephones());
+	public int removeOrhans(Set<TelephoneEntity> object) {
+		Set<TelephoneEntity> userTelephones = new HashSet<>(object);
 
 		int removedTelephones = 1;
 
-		for (TelephoneEntity telephone : telephonesUser) {
+		for (TelephoneEntity telephone : userTelephones) {
 			if (telephone.getUsers().size() == 0) {
 				remove(telephone);
 				removedTelephones++;
