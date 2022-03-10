@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
-import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.ITelephoneRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.ITelephoneService;
 
