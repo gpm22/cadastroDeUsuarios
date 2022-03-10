@@ -77,5 +77,11 @@ public class UserEntity {
 		this.emails = new HashSet<>();
 		this.telephones = new HashSet<>();
 	}
+	
+	public boolean fullyEquals(UserEntity user) {
+		return this.equals(user) && this.getTelephones().equals(user.getTelephones())
+				&& this.getEmails().equals(user.getEmails())
+				&& this.getAdress().equals(user.getAdress());
+	}
 
 }
