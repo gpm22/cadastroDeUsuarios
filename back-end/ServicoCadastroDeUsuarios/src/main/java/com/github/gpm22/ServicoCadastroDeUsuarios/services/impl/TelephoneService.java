@@ -1,6 +1,5 @@
 package com.github.gpm22.ServicoCadastroDeUsuarios.services.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,28 +45,20 @@ public class TelephoneService implements ITelephoneService {
 
 	@Override
 	public int removeOrhans(Set<TelephoneEntity> object) {
-		Set<TelephoneEntity> userTelephones = new HashSet<>(object);
+		Set<TelephoneEntity> orphansTelephones = object.stream().filter(telephone -> telephone.getUsers().size() == 0)
+				.collect(Collectors.toSet());
 
-		int removedTelephones = 1;
-
-		for (TelephoneEntity telephone : userTelephones) {
-			if (telephone.getUsers().size() == 0) {
-				remove(telephone);
-				removedTelephones++;
-			}
-		}
-
-		return removedTelephones;
+		return telephoneRepository.removeAll(orphansTelephones);
 	}
 
 	@Override
 	public void changeNewlyInsertedTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
 
-		Set<TelephoneEntity> newlyInsertedTelephones = telephones.stream().filter(telephone -> telephone.getId() == null)
-				.collect(Collectors.toSet());
+		Set<TelephoneEntity> newlyInsertedTelephones = telephones.stream()
+				.filter(telephone -> telephone.getId() == null).collect(Collectors.toSet());
 
 		List<TelephoneEntity> existingTelephones = telephoneRepository.findAllByList(newlyInsertedTelephones);
-		
+
 		telephones.removeAll(existingTelephones);
 		telephones.addAll(existingTelephones);
 

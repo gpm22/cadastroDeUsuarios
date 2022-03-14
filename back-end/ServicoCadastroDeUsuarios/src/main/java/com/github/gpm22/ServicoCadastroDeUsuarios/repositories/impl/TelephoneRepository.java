@@ -64,16 +64,24 @@ public class TelephoneRepository implements ITelephoneRepository {
 	public List<TelephoneEntity> findAll() {
 		return entityManager.createQuery("Select t from TelephoneEntity t").getResultList();
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<TelephoneEntity> findAllByList(Collection<TelephoneEntity> telephones) {
-		
+
 		Set<String> numbers = telephones.stream().map(telephone -> telephone.getNumber()).collect(Collectors.toSet());
-		
-		String sql ="Select t from TelephoneEntity t where t.number in :numbers";
-		
+
+		String sql = "Select t from TelephoneEntity t where t.number in :numbers";
+
 		return entityManager.createQuery(sql).setParameter("numbers", numbers).getResultList();
+	}
+
+	@Override
+	@Transactional
+	public int removeAll(Set<TelephoneEntity> orphansTelephones) {
+		String sql = "Delete from TelephoneEntity t where t in :orphansTelephones";
+
+		return entityManager.createQuery(sql).setParameter("orphansTelephones", orphansTelephones).executeUpdate();
 	}
 
 }
