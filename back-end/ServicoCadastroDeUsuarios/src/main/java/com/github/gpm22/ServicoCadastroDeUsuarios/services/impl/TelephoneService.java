@@ -61,17 +61,15 @@ public class TelephoneService implements ITelephoneService {
 	}
 
 	@Override
-	public void changeTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
+	public void changeNewlyInsertedTelephonesForExistingTelephones(Set<TelephoneEntity> telephones) {
 
-		Set<TelephoneEntity> telephonesWithoutId = telephones.stream().filter(telephone -> telephone.getId() == null)
+		Set<TelephoneEntity> newlyInsertedTelephones = telephones.stream().filter(telephone -> telephone.getId() == null)
 				.collect(Collectors.toSet());
 
-		List<TelephoneEntity> existingTelephones = telephoneRepository.findAllByList(telephonesWithoutId) ;
-
-		for (TelephoneEntity telephone : existingTelephones) {
-			telephones.remove(telephone);
-			telephones.add(telephone);
-		}
+		List<TelephoneEntity> existingTelephones = telephoneRepository.findAllByList(newlyInsertedTelephones);
+		
+		telephones.removeAll(existingTelephones);
+		telephones.addAll(existingTelephones);
 
 	}
 

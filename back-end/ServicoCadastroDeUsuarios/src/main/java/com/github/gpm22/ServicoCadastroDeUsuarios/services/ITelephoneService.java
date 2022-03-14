@@ -8,6 +8,6 @@ public interface ITelephoneService extends IGenericService<TelephoneEntity>{
 
 	public int removeOrhans(Set<TelephoneEntity> object);
 
-	public void changeTelephonesForExistingTelephones(Set<TelephoneEntity> telephones);
+	public void changeNewlyInsertedTelephonesForExistingTelephones(Set<TelephoneEntity> telephones);
 
 }

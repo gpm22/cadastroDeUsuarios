@@ -54,7 +54,7 @@ public class Parser implements IParser {
 
 	private Set<TelephoneEntity> createTelephonesFromJSONArray(JSONArray jsonArray, UserEntity user) {
 		Set<TelephoneEntity> telephones = parseJSONArrayToTelephones(jsonArray, user);
-		telephoneService.changeTelephonesForExistingTelephones(telephones);
+		telephoneService.changeNewlyInsertedTelephonesForExistingTelephones(telephones);
 
 		return telephones;
 	}
