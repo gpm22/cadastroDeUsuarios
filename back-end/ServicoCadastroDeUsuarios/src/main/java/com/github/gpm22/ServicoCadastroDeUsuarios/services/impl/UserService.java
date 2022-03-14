@@ -44,7 +44,7 @@ public class UserService implements IUserService {
 
 	private Set<TelephoneEntity> excludedTelephones = new HashSet<>();
 
-	private AdressEntity excludedAdress;
+	private Optional<AdressEntity> excludedAdress = Optional.empty();
 
 	@Override
 	public List<UserEntity> getAll() {
@@ -84,7 +84,7 @@ public class UserService implements IUserService {
 	}
 
 	private void removeUserFromAdress(UserEntity user, AdressEntity adress) {
-		excludedAdress = adress;
+		excludedAdress = Optional.of(adress);
 		adress.getUsers().remove(user);
 	}
 
@@ -107,16 +107,16 @@ public class UserService implements IUserService {
 	}
 
 	private void removeExcludedAdressIfOrphan() {
-		if (excludedAdress != null) {
-			adressService.removeIfOrphan(excludedAdress);
-			excludedAdress = null;
+		if (excludedAdress.isPresent()) {
+			adressService.removeIfOrphan(excludedAdress.get());
+			excludedAdress = Optional.empty();
 		}
 	}
 
 	private void removeOrphansFromExcludedTelephones() {
 		if (excludedTelephones.size() > 0) {
 			telephoneService.removeOrhans(excludedTelephones);
-			excludedTelephones = new HashSet<>();
+			excludedTelephones.clear();
 		}
 	}
 
