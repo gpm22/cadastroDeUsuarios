@@ -10,10 +10,7 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.AdressEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IAdressRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IAdressService;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class AdressService implements IAdressService {
 
 	@Autowired

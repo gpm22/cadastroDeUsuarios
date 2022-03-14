@@ -13,10 +13,7 @@ import com.github.gpm22.ServicoCadastroDeUsuarios.entities.TelephoneEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.ITelephoneRepository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.ITelephoneService;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class TelephoneService implements ITelephoneService {
 
 	@Autowired

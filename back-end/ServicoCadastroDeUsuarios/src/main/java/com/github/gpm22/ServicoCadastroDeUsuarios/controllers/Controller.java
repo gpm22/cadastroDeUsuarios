@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IParser;
 import com.github.gpm22.ServicoCadastroDeUsuarios.services.IUserService;
 
-import lombok.extern.log4j.Log4j2;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@Log4j2
 public class Controller {
 
 	@Autowired

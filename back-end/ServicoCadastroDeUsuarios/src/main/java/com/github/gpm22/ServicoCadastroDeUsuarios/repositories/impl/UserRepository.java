@@ -13,10 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.github.gpm22.ServicoCadastroDeUsuarios.entities.UserEntity;
 import com.github.gpm22.ServicoCadastroDeUsuarios.repositories.IUserRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 @Repository
-@Log4j2
 public class UserRepository implements IUserRepository {
 
 	@PersistenceContext
