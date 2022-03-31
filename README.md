@@ -1,125 +1,131 @@
-# Cadastro de Usuários
+# User Registration
 
-## Descrição do Sistema
+Versão em português disponível em https://github.com/gpm22/cadastroDeUsuarios/blob/main/LEIAME.md.
 
-### Objetivo
+## System Description
 
-Sistema para cadastrar e recuperar dados de usuários, onde o cadastro é apenas feito por usuários com permissão de **administrador**, além de que todo usuário que for cadastrado pela plataforma será um usuário **comum**, isto é, sem permissão de administrador. Usuários comuns apenas podem visualizar os próprios dados, enquanto administradores podem visualizar os próprios dados e cadastrar, atualizar e deletar usuários.
+### Purpose
 
-### Tecnologias Utilizadas
+Web System for registering and retrieving user data, where registration is only performed by users with **administrator** permission, moreover every user who is registered by the platform will be a **ordinary** user, that is, without **administrator** permission. **Ordinary** users can only view their own data, while **administrators** can view their own data and register, update and delete users.
 
-O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serviço**), onde a comunicação entre essas partes é feita por meio de requisições **HTTP.** O **front** foi feito utilizando as tecnologias **React** e **bootstrap**, enquanto que o **back** foi criado utilizando **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Lombok, Maven e H2**.
+### Applied Technologies
 
-## Como usar
+The systems was divided into **front-end** (or **client**) and **back-end** (or **service**), where communication between these parts is done trough **HTTP** requests. The **client** was made using **React** and **bootstrap**, while the **service** was created using **Java 8, Spring, Spring Boot, Spring Security, Hibernate, Lombok , Maven, and H2**.
 
-### Inicializando o Sistema
+## How to Use
 
-Devidos as tecnologias aqui utilizadas é necessário ter instalado tanto o **Maven** quanto o **NPM** para a execução desse sistema, além de fazer um clone ou baixar os arquivos do atual repositório. Também pode ser necessário instalar o plugin do **Lombok**, acaso queira abrir o **back-end** em alguma IDE ou editor.
+### Booting the System
 
-Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utilizando o terminal, deve-se entrar na pasta **front-end** e executar os comandos **npm install**, para instalar as dependências necessárias, e **npm start**, para iniciar a aplicação React. Por sua vez, também utilizando o terminal, para iniciar o **back-end**, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** e executar os comandos **mvn clean e mvn install**, para limpar o projeto e instalar as dependências necessárias, e **mvn spring-boot:run**, para iniciar a aplicação.
+Due to the technologies used here, it is necessary to have installed both **Maven** and **NPM** to run this system, in addition to making a clone or downloading the files from the current repository. You may also need to install the **Lombok** plugin if you want to open the **service** in an IDE or text editor.
 
-O **cliente** estará disponível na url **http://localhost:3000/**, enquanto os end-points do **serviço** estarão disponíveis na url **http://localhost:8080/**, assim como o cliente do banco de dados **H2** que estará disponível na url **http://localhost:8080/cadastro-de-usuarios/v1/h2-console**.
+Each technology is started separately, in the case of the **client**, using the terminal, enter the **front-end** folder and execute the commands **npm install**, to install the necessary dependencies, and **npm start**, to start the React application. To start the **service**, also using the terminal, you must go to the **\back-end\ServicoCadastroDeUsuarios** directory and run the commands **mvn clean** and **mvn install**, to clean the project and install the necessary dependencies, and **mvn spring -boot:run**, to start the application.
 
-Existem dois usuários já pré-definidos no sistema e que podem ser utilizados:
+The client will be available at the url **http://localhost:3000/**, while the service endpoints will be available at the url **http://localhost:8080/**, as well as the **H2** database client, which will be available at the url **http://localhost:8080/cadastro-de-usuarios/v1/h2-console**.
 
-* Nome de Usuário: **admin**
-  * Senha: **123456**
-* Nome de Usuário: **comum**
-  * Senha: **123456**
+There are two pre-defined users in the system that can be used:
 
-### Utilizando o Sistema
+* Username: **admin**
+  * Password: **123456**
+  * Permission: **Administrator User**
+* Username: **comum**
+  * Password: **123456**
+  * Permission: **Ordinary User**
 
-#### Tela de Login
+### Using the System
 
-Ao entrar na url **http://localhost:3000/**, ou em qualquer url válida do sistema, o usuário será direcionando para a página de **login**  <a href="#Figura1">(Figura 1)</a>:
+#### Login Page
+
+By entering the url **http://localhost:3000/**, or any other valid system url, the user will be redirected to the **login** page <a href="#Figure1">(Figure 1 )</a>:
 
 ![login](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/login.png?raw=true)
 
-<p id="Figura1" align="center"><b>Figura 1</b> - Tela de Login</p>
+<p id="Figura1" align="center"><b>Figure 1</b> - Login Page</p>
 
-#### Tela de Não Encontrado
+#### Not Found Page
 
-Ao acessar uma url inválida do sistema, o usuário será redirecionado para a página de **não encontrado** <a href="#Figura2">(Figura 2)</a>:
+When accessing an invalid system url, the user will be redirected to the **not found** page <a href="#Figure2">(Figure 2)</a>:
 
 ![not-found](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/not-found.png?raw=true)
 
-<p id="Figura2" align="center"><b>Figura 2</b> - Tela de Não Encontrado</p>
+<p id="Figura2" align="center"><b>Figure 2</b> - Not Found Page</p>
 
-#### Tela de Visualização de Dados
+#### Data Visualization Page
 
-Após ser corretamente autenticado, o usuário é redirecionado do **login** para a página de **visualização de dados** <a href="#Figura3">(Figura 3)</a>:
+After being properly authenticated, the user is redirected from **login** to the **data view** page <a href="#Figure3">(Figure 3)</a>:
 
 ![dataviz](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/dataviz.png?raw=true)
 
-<p id="Figura3" align="center"><b>Figura 3</b> - Tela de Visualização de Dados</p>
+<p id="Figura3" align="center"><b>Figure 3</b> - Data Visualization Page</p>
 
-Essa tela contém todas as informações cadastradas do usuário e uma seção para mudança de senha.
+This page contains all the registered user information and a password change section.
 
-No caso de usuários **comuns**, essa é a única tela disponível, então o header fica apenas com a opção de sair <a href="#Figura4">(Figura 4)</a>:
+In the case of **ordinary** users, this is the only page available, so the header only shows the option to log out <a href="#Figure4">(Figure 4)</a>:
 
 ![header-comum](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/header-comum.png?raw=true)
 
-<p id="Figura4" align="center"><b>Figura 4</b> - Header dos Usuários Comuns</p>
+<p id="Figure4" align="center"><b>Figure 4</b> - Ordinary Users Header</p>
 
-Já no caso de usuários **administradores**, ainda existem as telas de **cadastrar novos usuários** e de **modificar/deletar usuários**, então o header dos **administradores** tem mais opções, como pode ser visto na Figura 3.
+In the case of **administrators** users, they will have access to two more pages: **registration** and **alteration** pages. So the **administrators** header shows more options, as can be seen seen in <a href="#Figure3">Figure 3</a>.
 
-#### Tela de Cadastro
+#### Registration Page
 
-A **tela de cadastro** <a href="#Figura5">(Figura 5)</a> é um formulário onde são necessários informar os dados apresentandos na tela de **visualização de dados** e o nome de usuário, sendo que todos os campos são de preenchimento **obrigatório**, com exceção do **complemento do endereço**.
+The **registration page** <a href="#Figure5">(Figure 5)</a> is a form where it is necessary to inform the data presented in the **data visualization page** <a href="#Figure3">(Figure 3)</a> and the **username**. All fields, but the **address complement**, are **mandatory**.
 
 ![cadastro-de-usuarios](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/cadastro-de-usuarios.png?raw=true)
 
-<p id="Figura5" align="center"><b>Figura 5</b> - Tela de Cadastro</p>
+<p id="Figure5" align="center"><b>Figure 5</b> - Registration Page</p>
 
-Os campos **CPF**, **telefones** e **CEP** possuem máscaras, sendo que no caso dos **telefones**, a máscara irá varia dependendo do tipo de telefone, que pode ser **celular**, **residencial** ou **comercial**. Todos esses dados mascarados são persistidos no sistema sem máscara, sendo que o **CPF** é validado antes da inserção.
+The **CPF**, **telephones**, and **CEP** fields have masks, and in the case of **telephones**, the mask will vary depending on the type of telephone, which can be **mobile**, **residential** or **commercial**, as mobile phone numbers have an additional digit in Brazil. All these masked data are persisted in the system without a mask, and the **CPF** is validated before insertion.
 
-O campo **nome completo** deve receber uma string que tenha entre 3-100 caracteres alfanuméricos e/ou espaços. 
+The **full name** field must receive a string that is between 3-100 alphanumeric characters and/or spaces.
 
-No caso do campo **email**, a validação da entrada é simples, aceitando qualquer entrada no formato: **xxxx@xxxx.xxx**.
+In the case of the **email** field, input validation is simple, accepting any input in the format: **xxxx@xxxx.xxx**.
 
-É possível adicionar inúmeros **emails** e **telefones**, sendo obrigatório no mínimo um de cada. Para adicionar mais uma entrada nesses campos é só clicar no botão de **+** <a href="#Figura6">(Figura 6)</a>. 
+It is possible to add countless **emails** and **telephones**, but at least one of each is required. To add one more entry in these fields, just click on the **+** button <a href="#Figure6">(Figure 6)</a>. 
 
  <p align="center"> <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/emails.png?raw=true" alt="emails"> </p>
 
-<p id="#Figura6" align="center"><b>Figura 6</b> - Adicionando novas entradas de Email</p>
+<p id="#Figure6" align="center"><b>Figure 6</b> - Adding New Email Entries</p>
 
-Já para excluir uma entrada desse campos, é necessário apenas clicar no botão **x** <a href="#Figura6">(Figura 6)</a>. Porém como é necessário que pelo menos um **email** e um **telefone** sejam preenchidos, o botão **x** não aparece quando só tem um entrada.
 
-O sistema está configurado para buscar o **CEP** informado pelo usuário através da [API ViaCEP](https://viacep.com.br/) e preencher o formulário com a informações retornadas <a href="#Figura7">(Figura 7)</a>, sendo que o usuário pode modificá-las.
+
+To delete an entry from these fields, it is only necessary to click on the **x** button <a href="#Figure6">(Figure 6)</a>. However, as it is necessary that at least one **email** and one phone number be filled in, the **x** button does not appear when there is only one entry.
+
+The system is configured to search for the **CEP** informed by the user through the [ViaCEP API](https://viacep.com.br/) to fill in the form with the information returned <a href="#Figure7">(Figure 7)</a>, whereas the user can modify it.
 
 | <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-antes.png?raw=true" alt="endereco-antes" style="zoom:100%;" /> | <img src="https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/endereco-depois.png?raw=true" style="zoom:100%;" /> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
-<p id="Figura7" align="center"><b>Figura 7</b> - Preenchimento Automático do Endereço por Meio do CEP</p>
+<p id="Figure7" align="center"><b>Figure 7</b> - Address Autofill by CEP</p>
 
-Acaso tente-se cadastrar uma conta com um **CPF** ou um **nome de usuário** já cadastrados, o sistema irá mostrar uma mensagem de erro.
+Finally, if there is an attempt to register an account with a **CPF** or a **username** already registered, the system will show an error message.
 
-#### Tela de Alteração de Usuários
+#### User Modification Page
 
-A tela de **alteração de usuários** contém uma **tabela** <a href="#Figura8">(Figura 8)</a> com todos os dados dos usuários:
+The **user modification page** contains a **table** <a href="#Figure8">(Figure 8)</a> with all the users data:
 
 ![alteracao](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/alteracao.png?raw=true)
 
-<p id="#Figura8" align="center"><b>Figura 8</b> - Tabela de Usuários</p>
+<p id="#Figure8" align="center"><b>Figure 8</b> - Users Table</p>
 
-Na última coluna a esquerda da tabela de usuários existe os botões com as opções de **editar** ou **remover**, sendo que ao se clicar em **remover** um modal é disparado <a href="#Figura9">(Figura 9)</a>:
+In the last column on the left of the users table are the buttons with the options to **edit** or **remove**, whereas when clicking on the **remove** button a modal is triggered <a href="#Figure9">(Figure 9)</a>:
 
 ![alteracao](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/modal-alteracao.png?raw=true)
 
-<p id="Figura9" align="center"><b>Figura 9</b> - Modal de Remoção de Usuário</p>
+<p id="Figure9" align="center"><b>Figure 9</b> - User Removal Modal</p>
 
-E ao clicar em **sim** o usuário é removido e a página recarregada <a href="#Figura10">(Figura 10)</a>:
+And when clicking on the **yes** button, the user is removed and the table is updated <a href="#Figure10">(Figure 10)</a>:
 
 ![alteracao-excluido](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/alteracao-excluido.png?raw=true)
 
-<p id="Figura10" align="center"><b>Figura 10</b> - Tabela de Usuários após Exclusão do Usuário Comum</p>
+<p id="Figure10" align="center"><b>Figure 10</b> - Users Table after the Ordinary User Removal</p>
 
-Por sua vez, ao se clicar em **editar** o usuário é redirecionado para a tela de **edição de usuários** <a href="#Figura11">(Figura 11)</a>, que é semelhante ao **formulário de cadastro** <a href="#Figura5">(Figura 5)</a>, mas com as informações já preenchidas e sem as seções de **CPF** e **senha**:
+For its part, when clicking on the **edit** button, the user is redirected to the **user editing page** <a href="#Figure11">(Figure 11)</a>, which is similar to the **registration form**  <a href="#Figure5">(Figure 5)</a>, but with the information already filled in and without the **CPF** and **password** sections:
 
 ![edicao-de-usuario](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/edicao-de-usuario.png?raw=true)
 
-<p id="Figura11" align="center"><b>Figura 11 </b> - Tela de Edição de Usuários</p>
+<p id="Figure11" align="center"><b>Figure 11 </b> - User Editing Page</p>
 
-Ao terminar a edição o usuário é redirecionado de volta para a tabela de usuários <a href="#Figura8">(Figura 8)</a>.
+After finishing the editing, the user is redirected back to the users table <a href="#Figure8">(Figure 8)</a>.
 
-E por fim, ao se clicar em **sair** o usuário é redirecionado para a tela de **login** <a href="#Figura1">(Figura 1)</a>.
+Finally, when clicking on the **log out** option, the user is redirected to the **login page** <a href="#Figure1">(Figure 1)</a>.

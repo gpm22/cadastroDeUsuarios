@@ -4,7 +4,7 @@
 
 ### Objetivo
 
-Sistema para cadastrar e recuperar dados de usuários, onde o cadastro é apenas feito por usuários com permissão de **administrador**, além de que todo usuário que for cadastrado pela plataforma será um usuário **comum**, isto é, sem permissão de administrador. Usuários comuns apenas podem visualizar os próprios dados, enquanto administradores podem visualizar os próprios dados e cadastrar, atualizar e deletar usuários.
+Sistema para cadastrar e recuperar dados de usuários, onde o cadastro é apenas feito por usuários com permissão de **administrador**, além de que todo usuário que for cadastrado pela plataforma será um usuário **comum**, isto é, sem permissão de **administrador.** Usuários **comuns** apenas podem visualizar os próprios dados, enquanto administradores podem visualizar os próprios dados e cadastrar, atualizar e deletar usuários.
 
 ### Tecnologias Utilizadas
 
@@ -14,9 +14,9 @@ O sistema foi divido em **front-end** (ou **cliente**) e **back-end** (ou **serv
 
 ### Inicializando o Sistema
 
-Devidos as tecnologias aqui utilizadas é necessário ter instalado tanto o **Maven** quanto o **NPM** para a execução desse sistema, além de fazer um clone ou baixar os arquivos do atual repositório. Também pode ser necessário instalar o plugin do **Lombok**, acaso queira abrir o **back-end** em alguma IDE ou editor.
+Devido as tecnologias aqui utilizadas é necessário ter instalado tanto o **Maven** quanto o **NPM** para a execução desse sistema, além de fazer um clone ou baixar os arquivos do atual repositório. Também pode ser necessário instalar o plugin do **Lombok**, acaso queira abrir o **back-end** em alguma IDE ou editor de texto.
 
-Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utilizando o terminal, deve-se entrar na pasta **front-end** e executar os comandos **npm install**, para instalar as dependências necessárias, e **npm start**, para iniciar a aplicação React. Por sua vez, também utilizando o terminal, para iniciar o **back-end**, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** e executar os comandos **mvn clean e mvn install**, para limpar o projeto e instalar as dependências necessárias, e **mvn spring-boot:run**, para iniciar a aplicação.
+Cada tecnologia é iniciada de maneira separada, no caso do **front-end**, utilizando o terminal, deve-se entrar na pasta **front-end** e executar os comandos **npm install**, para instalar as dependências necessárias, e **npm start**, para iniciar a aplicação React. Por sua vez, também utilizando o terminal, para iniciar o **back-end**, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** e executar os comandos **mvn clean** e **mvn install**, para limpar o projeto e instalar as dependências necessárias, e **mvn spring-boot:run**, para iniciar a aplicação.
 
 O **cliente** estará disponível na url **http://localhost:3000/**, enquanto os end-points do **serviço** estarão disponíveis na url **http://localhost:8080/**, assim como o cliente do banco de dados **H2** que estará disponível na url **http://localhost:8080/cadastro-de-usuarios/v1/h2-console**.
 
@@ -61,11 +61,11 @@ No caso de usuários **comuns**, essa é a única tela disponível, então o hea
 
 <p id="Figura4" align="center"><b>Figura 4</b> - Header dos Usuários Comuns</p>
 
-Já no caso de usuários **administradores**, ainda existem as telas de **cadastrar novos usuários** e de **modificar/deletar usuários**, então o header dos **administradores** tem mais opções, como pode ser visto na Figura 3.
+Já no caso de usuários **administradores**, ainda existem as telas de **cadastro** e **modificação**, então o header dos **administradores** tem mais opções, como pode ser visto na <a href="#Figura3">Figura 3</a>.
 
 #### Tela de Cadastro
 
-A **tela de cadastro** <a href="#Figura5">(Figura 5)</a> é um formulário onde são necessários informar os dados apresentandos na tela de **visualização de dados** e o nome de usuário, sendo que todos os campos são de preenchimento **obrigatório**, com exceção do **complemento do endereço**.
+A **tela de cadastro** <a href="#Figura5">(Figura 5)</a> é um formulário onde são necessários informar os dados apresentandos na tela de **visualização de dados** <a href="#Figura3">(Figura 3)</a> e o **nome de usuário**, sendo que todos os campos são de preenchimento **obrigatório**, com exceção do **complemento do endereço**.
 
 ![cadastro-de-usuarios](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/cadastro-de-usuarios.png?raw=true)
 
@@ -92,7 +92,7 @@ O sistema está configurado para buscar o **CEP** informado pelo usuário atrav�
 
 <p id="Figura7" align="center"><b>Figura 7</b> - Preenchimento Automático do Endereço por Meio do CEP</p>
 
-Acaso tente-se cadastrar uma conta com um **CPF** ou um **nome de usuário** já cadastrados, o sistema irá mostrar uma mensagem de erro.
+Por fim, acaso ocorra uma tentativa de cadastrar uma conta com um **CPF** ou um **nome de usuário** já cadastrados, o sistema irá mostrar uma mensagem de erro.
 
 #### Tela de Alteração de Usuários
 
@@ -102,13 +102,13 @@ A tela de **alteração de usuários** contém uma **tabela** <a href="#Figura8"
 
 <p id="#Figura8" align="center"><b>Figura 8</b> - Tabela de Usuários</p>
 
-Na última coluna a esquerda da tabela de usuários existe os botões com as opções de **editar** ou **remover**, sendo que ao se clicar em **remover** um modal é disparado <a href="#Figura9">(Figura 9)</a>:
+Na última coluna a esquerda da tabela de usuários estão os botões com as opções de **editar** ou **remover**, sendo que ao se clicar em **remover** um modal é disparado <a href="#Figura9">(Figura 9)</a>:
 
 ![alteracao](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/modal-alteracao.png?raw=true)
 
 <p id="Figura9" align="center"><b>Figura 9</b> - Modal de Remoção de Usuário</p>
 
-E ao clicar em **sim** o usuário é removido e a página recarregada <a href="#Figura10">(Figura 10)</a>:
+E ao clicar em **sim** o usuário é removido e a tabela é atualizada <a href="#Figura10">(Figura 10)</a>:
 
 ![alteracao-excluido](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/alteracao-excluido.png?raw=true)
 
