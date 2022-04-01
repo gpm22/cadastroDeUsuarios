@@ -1,61 +1,63 @@
-# Cadastro de Usuários (Back-end)
+# User Registration (Service)
 
-## Descrição do Sistema
+Versão em português disponível em https://github.com/gpm22/cadastroDeUsuarios/blob/main/back-end/LEIAME.md
 
-### Objetivo
+## System Description
 
-Como é o local onde as regras de negócio estão, o back-end aqui criado é uma API Restful responsável por: 
+### Purpose
 
-* Tratar e persisitir os dados enviados pelo front-end;
-* Fazer as alterações nos recursos existentes, quando foir requisitado pelo front-end;
-* Retornar os dados requisitados pelo front-end;
-* Fazer a comunicação com o banco de dados;
-* Autenticar usuários;
+As this is the local where the business rules are, the service created here is a Restful API responsible for:
 
-### Tecnologias Utilizadas
+* Treat and persist the data sent by the client;
+* Make changes to existing resources, when required by the client
+* Return the data requested by the client;
+* Communicate with the database;
+* Authenticate users;
 
-Essa API foi criada utilizando **Java 8**, **Spring**, **Spring Boot**, **Spring Security**, **Hibernate**, **Lombok**, **Maven** e **H2**.
+### Applied Technologies
 
-## Como usar
+This API was created using **Java 8**, **Spring**, **Spring Boot**, **Spring Security**, **Hibernate**, **Lombok**, **Maven**, and **H2**.
 
-### Inicializando o Sistema
+## How to Use
 
-Para fazer uso dessa API é necessário ter o **Maven** instalado, além de fazer um clone ou baixar os arquivos do atual repositório. Também pode ser necessário instalar o plugin do **Lombok**, acaso queira rodar o sistema com o auxilio de alguma IDE ou editor de texto.
+### Booting the System
 
-Após ter todos esses requisitios, deve-ser ir até o diretório **\back-end\ServicoCadastroDeUsuarios** por meio de um terminal e executar os comandos **mvn clean e mvn install**, para limpar o projeto e instalar as dependências necessárias, e **mvn spring-boot:run**, para iniciar a aplicação.
+To run this API it is necessary to have **Maven** installed, in addition to making a clone or downloading the files from the current repository. It may also be necessary to install the **Lombok** plugin, in case you want to run the system using an IDE or text editor.
 
-Os end-points do **serviço** estarão disponíveis na url **http://localhost:8080/**, assim como o cliente do banco de dados **H2** que estará disponível na url **http://localhost:8080/cadastro-de-usuarios/v1/h2-console**.
+After having all these requirements, you must go to the **\back-end\ServicoCadastroDeUsuarios** directory through a terminal and run the commands **mvn clean** and **mvn install**, to clean the project and install the necessary dependencies, and **mvn spring-boot:run**, to start the application.
 
-### End-Points
+The **service** endpoints will be available at the url **http://localhost:8080/**, as well as the **H2** database client, which will be available at the url **http://localhost:8080/cadastro-de-usuarios/v1/h2-console**.
 
-Os end-points dessa API são:
+### Endpoints
+
+The API endpoints are:
 
 * `http://localhost:8080/cadastro-de-usuarios/v1/`
-  * Métodos:
+  * Methods:
     * **GET**
-      * **Objetivo:** Retornar todos os usuários cadastrados no sistema;
+      * **Purpose:** Return all users registered in the system;
     * **POST**
-      * **Objetivo:** Cadastrar um novo usuário no sistema;
+      * **Purpose:** Register a new user in the system;
     * **PUT**
-      * **Objetivo: **Alterar os dados de um usuário existente;
+      * **Purpose: **Modify the data of an existing user;
 * `http://localhost:8080/cadastro-de-usuarios/v1/{CPF}`
-  * Métodos:
+  * Methods:
     * **GET**
-      * **Objetivo:** Retornar o usuário que possui o **CPF** especificado;
+      * **Purpose:** Return the user who has the specified **CPF**
     * **DELETE**
-      * **Objetivo:** Deletar o usuário que possui o **CPF** especificado
+      * **Purpose:** Delete the user who has the specified **CPF**;
 * `http://localhost:8080/cadastro-de-usuarios/v1/authenticate`
-  * Métodos:
+  * Methods:
     * **POST**
-      * **Objetivo:** Fazer a autenticação do usuário para o login;
+      * **Purpose:** Authenticate the user for login;
 
-## Banco de Dados
+## Database
 
-O sistema de banco de dados utilizado é o **[H2](https://www.h2database.com/html/main.html)**, que é um sistema totalmente criado em java e que pode ser embebido no spring boot. Foram criadas 4 tabelas no banco de dados com os seguintes campos e relações:
+The database system used here is the **[H2](https://www.h2database.com/html/main.html)**, which is a system entirely created in java and that can be embedded in spring boot. Four tables were created in the database with the following fields and relationships:
 
 ![tabelas](https://github.com/gpm22/cadastroDeUsuarios/blob/main/img/tabelas.jpg?raw=true)
 
-Para criar os usuários **admin** e **comum**, um script **SQL** (**data.sql**) é utilizado. Esse script contém as seguintes informações:
+To create the **admin** and **comum** users, a **SQL** script (**data.sql**) is used. This script contains the following information:
 
 ```sql
 INSERT INTO ADRESSES (adress_id, adress_cep, adress_publicplace, adress_district, adress_city, adress_uf, adress_complement) 
@@ -99,4 +101,4 @@ INSERT INTO telephones_users (telephone_entity_telephone_id, users_user_cpf)
 VALUES (1000003, '11111111111');
 ```
 
-Ao se analisar o arquivo **data.sql**, pode-se perceber o uso do algoritmo **Bcrypt** para hashear as senhas antes delas serem persistidas.
+After analyzing the **data.sql** file, one can notice the use of the **Bcrypt** algorithm to hash the passwords before they are persisted.
