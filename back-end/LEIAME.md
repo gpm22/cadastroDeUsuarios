@@ -37,7 +37,7 @@ Os end-points dessa API são:
     * **POST**
       * **Objetivo:** Cadastrar um novo usuário no sistema;
     * **PUT**
-      * **Objetivo: **Alterar os dados de um usuário existente;
+      * **Objetivo:** Alterar os dados de um usuário existente;
 * `http://localhost:8080/cadastro-de-usuarios/v1/{CPF}`
   * Métodos:
     * **GET**

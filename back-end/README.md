@@ -39,7 +39,7 @@ The API endpoints are:
     * **POST**
       * **Purpose:** Register a new user in the system;
     * **PUT**
-      * **Purpose: **Modify the data of an existing user;
+      * **Purpose:** Modify the data of an existing user;
 * `http://localhost:8080/cadastro-de-usuarios/v1/{CPF}`
   * Methods:
     * **GET**
